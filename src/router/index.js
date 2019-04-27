@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Editor from '@/components/Editor'
-import Root from '@/components/Root'
+import ConfigParent from '@/components/ConfigParent'
 
 Vue.use(Router)
 
@@ -13,9 +13,9 @@ export default new Router({
       component: Editor
     },
     {
-      path: '/root',
-      name: 'Root',
-      component: Root
+      path: '/config',
+      name: '',
+      component: ConfigParent
     },
   ]
 })
