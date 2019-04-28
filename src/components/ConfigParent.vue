@@ -1,39 +1,31 @@
 <template>
   <div class="wrapper">
-    <b-navbar toggleable="lg" type="dark" variant="dark" class="header">
-      <b-navbar-brand href="#">AtCoder-JsDebugger</b-navbar-brand>
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template slot="button-content">
-              <em>
-                <i class="fas fa-bars"></i>
-              </em>
-            </template>
-            <b-dropdown-item href="#">
-              <i class="fas fa-cog"></i>
-              settings
-            </b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-
+    <GlobalHeader></GlobalHeader>
     <b-row>
       <b-col class="col-sm-3 hidden-xs">
         <div class="sidebar">
+          <b-list-group>
+            <b-list-group-item href="#/config/">Config</b-list-group-item>
+            <b-list-group-item href="#/config/editor-theme" disable>Editor Theme</b-list-group-item>
+            <b-list-group-item href="#/config/snippets">Snippets</b-list-group-item>
+            <b-list-group-item href="#/config/about">About</b-list-group-item>
+          </b-list-group>
         </div>
       </b-col>
       <b-col class="col-sm-9 col-sm-offset-3">
+        <br> 
+        <router-view/>
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
+import GlobalHeader from "./GlobalHeader";
 export default {
-  components: {}
+  components: {
+    GlobalHeader,
+  }
 };
 </script>
 
@@ -55,20 +47,16 @@ export default {
     overflow-y: auto
   }
 
-  header {
+  .content {
+    width:80%;
     position: fixed;
-    /* top: 56px;
+    top: 56px;
     bottom: 0;
-    left: 0; */
-    display: block;
-    overflow-x: hidden;
-    overflow-y: auto  
-  }
-
-  content {
-    position: fixed;
-    overflow-x: hidden;
-    overflow-y: auto  
+    left: 22%;
+    /* right:80%; */
+    /* display: block; */
+    /* overflow-x: hidden; */
+    overflow-y: auto
   }
 }
 </style>

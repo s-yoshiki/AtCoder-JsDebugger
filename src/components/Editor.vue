@@ -11,24 +11,7 @@
         ></monaco-editor>
       </b-col>
       <b-col>
-        <b-navbar  type="dark">
-          <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav class="ml-auto">
-
-              <b-nav-item-dropdown right>
-                <!-- Using 'button-content' slot -->
-                <template slot="button-content">
-                  <em><i class="fas fa-bars"></i></em>
-                </template>
-                <b-dropdown-item href="#">
-                  <i class="fas fa-cog"></i>
-                  Settings 
-                </b-dropdown-item>
-              </b-nav-item-dropdown>
-            </b-navbar-nav>
-          </b-collapse>
-        </b-navbar>
-  
+        <GlobalHeader></GlobalHeader>
         <b-container class="fullheight">
           <label>input</label>
           <div class="std-wrapper">
@@ -41,16 +24,82 @@
               theme="vs-dark"
             ></monaco-editor>
           </div>
-          <label>output</label>
-          <div class="std-wrapper">
-            <monaco-editor
-              style="height:200px;"
-              class="editor-min"
-              v-model="stdout"
-              language
-              ref="stdin"
-              theme="vs-dark"
-            ></monaco-editor>
+          <div v-if="editorStatus.errorpaineStatus">
+            <table>
+              <tr>
+                <td>
+                  <label>output</label>
+                <div class="std-wrapper">
+                  <monaco-editor
+                    style="height:200px;"
+                    class="editor-min"
+                    v-model="stdout"
+                    language
+                    ref="stdout"
+                    theme="vs-dark"
+                  ></monaco-editor>
+                </div>
+                </td>
+                <td>
+                                  <label>error</label>
+                <div class="std-wrapper">
+                  <monaco-editor
+                    style="height:200px;"
+                    class="editor-min"
+                    v-model="stderr"
+                    language
+                    ref="stderr"
+                    theme="vs-dark"
+                  ></monaco-editor>
+                </div>
+                </td>
+              </tr>
+            </table>
+            <!-- <b-row>
+              <b-col>
+                <label>output</label>
+                <div class="std-wrapper">
+                  <monaco-editor
+                    style="height:100px;"
+                    class="editor-min"
+                    v-model="stdout"
+                    language
+                    ref="stdout"
+                    theme="vs-dark"
+                  ></monaco-editor>
+                </div>
+              </b-col>
+              <b-col>
+                <label>error</label>
+                <div class="std-wrapper">
+                  <monaco-editor
+                    style="height:100px;"
+                    class="editor-min"
+                    v-model="stderr"
+                    language
+                    ref="stderr"
+                    theme="vs-dark"
+                  ></monaco-editor>
+                </div>
+              </b-col>
+            </b-row> -->
+          </div>
+          <div v-else>
+            <b-row>
+              <b-col>
+                <label>output</label>
+                <div class="std-wrapper">
+                  <monaco-editor
+                    style="height:200px;"
+                    class="editor-min"
+                    v-model="stdout"
+                    language
+                    ref="stdout"
+                    theme="vs-dark"
+                  ></monaco-editor>
+                </div>
+              </b-col>
+            </b-row>
           </div>
           <div class="text-right">
             <br>
@@ -64,29 +113,35 @@
 
 <script>
 import MonacoEditor from "vue-monaco";
+import GlobalHeader from "./GlobalHeader";
+import SnippetsStorage from "@/libs/SnippetsStorage";
+import { defaultCode } from "@/libs/StaticStrings";
+import EditorSettingsStorage from "@/libs/EditorSettingsStorage";
 
 export default {
   components: {
-    MonacoEditor
+    MonacoEditor,
+    GlobalHeader
   },
   data() {
     return {
-      code: `function main(arg) {
-  console.log(arg.trim().split("\\n")[0])
-}
-main(require('fs').readFileSync('/dev/stdin', 'utf8'));`,
+      code: '',
       stdin: "",
-      stdout: ""
+      stdout: "",
+      stderr: "",
+      editorStatus: {}
     };
   },
   methods: {
     run() {
       this.stdout = "";
+      this.stderr = "";
       let code = this.getStdio() + "\n";
       code += this.code;
-      console.log = arg => {
-        this.stdout += String(arg) + "\n";
-      };
+      eval(`
+      console.log = arg => {this.stdout += String(arg) + "\n"}
+      console.error = arg => {this.stderr += String(arg) + "\n"}
+      `)
       let callback = new Function(code);
       callback();
     },
@@ -102,7 +157,16 @@ main(require('fs').readFileSync('/dev/stdin', 'utf8'));`,
     }
   },
   mounted() {
-    let editor = this.$refs.editor.getMonaco();
+    let snippetsStorage = new SnippetsStorage();
+    if (snippetsStorage.get() != null) {
+      this.code = snippetsStorage.get();
+    } else {
+      this.code = defaultCode;
+    }
+    let editorStorage = new EditorSettingsStorage();
+    if (editorStorage.get() !== null) {
+      this.editorStatus = editorStorage.get();
+    }
   }
 };
 </script>
@@ -123,17 +187,33 @@ main(require('fs').readFileSync('/dev/stdin', 'utf8'));`,
   border-color: #fff;
   width: 100%;
 }
+
+.editor-half {
+  height: 200px;
+  border-color: #fff;
+  width: 50%;
+}
 .fullheight {
   height: 100%;
 }
 
 label {
-  color: #f3f3f3
+  color: #f3f3f3;
 }
 
 .std-wrapper {
   background-color: #fff;
   /* margin: 1px; */
-  padding:1px;
+  padding: 1px;
+}
+
+table {
+  width:100%;
+}
+table > tr {
+  width: 100%;
+}
+tr > td {
+  width: 50%;
 }
 </style>
