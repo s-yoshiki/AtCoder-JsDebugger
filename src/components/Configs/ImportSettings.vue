@@ -1,10 +1,10 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <b-button variant="success" v-on:click="save">Save</b-button>
     &nbsp; {{showMsg}}
     <br>&nbsp;
     <MonacoEditor
-      style="height:350px;width:100%;"
+      style="height:350px;width:95%;"
       class="editor"
       v-model="code"
       language="javascript"

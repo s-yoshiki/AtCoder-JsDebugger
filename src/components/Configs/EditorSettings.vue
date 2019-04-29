@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <b-row>
       <b-col cols="10">
         <strong>エラーコンソールの有効化 (非推奨)</strong>

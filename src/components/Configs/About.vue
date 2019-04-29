@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <h3>推奨環境</h3>
     <b-row>
       <b-col>

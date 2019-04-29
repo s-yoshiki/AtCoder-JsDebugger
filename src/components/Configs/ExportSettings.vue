@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <div class="text-right">
     <a 
       class="btn btn-secondary"
@@ -10,7 +10,7 @@
     </div>
     &nbsp;
     <MonacoEditor
-      style="height:350px;width:100%;"
+      style="height:350px;width:95%;"
       class="editor"
       v-model="code"
       language="javascript"
