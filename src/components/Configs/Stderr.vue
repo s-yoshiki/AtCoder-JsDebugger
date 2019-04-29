@@ -15,36 +15,42 @@
   </b-container>
 </template>
 <script>
-import MonacoEditor from "vue-monaco"
-import {SnippetsStorage, EditorSettingsStorage} from "@/libs/Storages";
+import MonacoEditor from "vue-monaco";
+import { EditorSettingsStorage, StderrStorage } from "@/libs/Storages";
 export default {
   components: {
-    MonacoEditor,
+    MonacoEditor
   },
   data() {
     return {
       code:'',
-      showMsg:'',
-      storage: new SnippetsStorage(),
-      editor:(new EditorSettingsStorage()).get(),
-    }
+      showMsg: '',
+      editor: (new EditorSettingsStorage()).get(),
+      storage: new StderrStorage()
+    };
   },
   methods: {
     init() {
-      this.code = this.storage.get()
+      if (this.storage.get()) {
+        this.code = this.storage.get();
+      }
     },
     save() {
-      this.storage.set(this.code)
-      this.showMsg = '保存しました'
+      try {
+        this.storage.set(this.code);
+        this.showMsg = "保存しました";
+      } catch (e) {
+        this.showMsg = "エラー" + e;
+      }
     },
     clear() {
       this.storage.reset()
       this.code = this.storage.get()
-      this.showMsg = '初期化しました'
+      this.showMsg = "初期化しました";
     }
   },
   mounted() {
-    this.init()
+    this.init();
   }
-}
+};
 </script>

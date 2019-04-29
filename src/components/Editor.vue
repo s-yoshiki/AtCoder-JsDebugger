@@ -7,7 +7,7 @@
           v-model="code"
           language="javascript"
           ref="editor"
-          theme="vs-dark"
+          :theme="editorStatus.themeColor"
         ></monaco-editor>
       </b-col>
       <b-col>
@@ -21,7 +21,7 @@
               v-model="stdin"
               language
               ref="stdin"
-              theme="vs-dark"
+              :theme="editorStatus.themeColor"
             ></monaco-editor>
           </div>
           <div v-if="editorStatus.errorpaineStatus">
@@ -36,12 +36,12 @@
                     v-model="stdout"
                     language
                     ref="stdout"
-                    theme="vs-dark"
+                    :theme="editorStatus.themeColor"
                   ></monaco-editor>
                 </div>
                 </td>
                 <td>
-                                  <label>error</label>
+                <label>error</label>
                 <div class="std-wrapper">
                   <monaco-editor
                     style="height:200px;"
@@ -49,61 +49,33 @@
                     v-model="stderr"
                     language
                     ref="stderr"
-                    theme="vs-dark"
+                    :theme="editorStatus.themeColor  "
                   ></monaco-editor>
                 </div>
                 </td>
               </tr>
             </table>
-            <!-- <b-row>
-              <b-col>
-                <label>output</label>
-                <div class="std-wrapper">
-                  <monaco-editor
-                    style="height:100px;"
-                    class="editor-min"
-                    v-model="stdout"
-                    language
-                    ref="stdout"
-                    theme="vs-dark"
-                  ></monaco-editor>
-                </div>
-              </b-col>
-              <b-col>
-                <label>error</label>
-                <div class="std-wrapper">
-                  <monaco-editor
-                    style="height:100px;"
-                    class="editor-min"
-                    v-model="stderr"
-                    language
-                    ref="stderr"
-                    theme="vs-dark"
-                  ></monaco-editor>
-                </div>
-              </b-col>
-            </b-row> -->
           </div>
           <div v-else>
             <b-row>
               <b-col>
                 <label>output</label>
                 <div class="std-wrapper">
-                  <monaco-editor
-                    style="height:200px;"
-                    class="editor-min"
-                    v-model="stdout"
-                    language
-                    ref="stdout"
-                    theme="vs-dark"
-                  ></monaco-editor>
+                  <monaco-editor style="height:200px;" class="editor-min" v-model="stdout" language ref="stdout" :theme="editorStatus.themeColor "></monaco-editor>
                 </div>
               </b-col>
             </b-row>
           </div>
           <div class="text-right">
             <br>
-            <b-button block variant="primary" v-on:click="run">Run</b-button>
+            <b-row>
+              <b-col cols="10">
+                <b-button block variant="primary" v-on:click="run">Run</b-button>
+              </b-col>
+              <b-col>
+                <b-button block variant="secondary" v-on:click="initEditor">Clear</b-button>
+              </b-col>
+            </b-row>
           </div>
         </b-container>
       </b-col>
@@ -114,9 +86,11 @@
 <script>
 import MonacoEditor from "vue-monaco";
 import GlobalHeader from "./GlobalHeader";
-import SnippetsStorage from "@/libs/SnippetsStorage";
 import { defaultCode } from "@/libs/StaticStrings";
-import EditorSettingsStorage from "@/libs/EditorSettingsStorage";
+import {
+  SnippetsStorage, EditorSettingsStorage, EditorChacheStorage,
+  StdinStorage, StdoutStorage, StderrStorage
+} from "@/libs/Storages";
 
 export default {
   components: {
@@ -129,31 +103,39 @@ export default {
       stdin: "",
       stdout: "",
       stderr: "",
-      editorStatus: {}
+      editorStatus: (new EditorSettingsStorage()).get()
     };
+  },
+  watch:{
+    code() {
+     (new EditorChacheStorage()).set(this.code)
+    }
   },
   methods: {
     run() {
       this.stdout = "";
       this.stderr = "";
-      let code = this.getStdio() + "\n";
-      code += this.code;
-      eval(`
-      console.log = arg => {this.stdout += String(arg) + "\n"}
-      console.error = arg => {this.stderr += String(arg) + "\n"}
-      `)
+      let code = ''
+      let stdinCode = (new StdinStorage()).get()
+      let stdoutCode = (new StdoutStorage()).get()
+      let stderrCode = (new StderrStorage()).get()
+      let AC_JS_DEBUGGER = {
+        __STDIN__:this.stdin,
+        __STDOUT__:'',
+        __STDERR__:''
+      }
+      stdinCode = stdinCode.split('AC_JS_DEBUGGER.__STDIN__').join(`\`${this.stdin}\``)
+      stdoutCode = stdoutCode.split('AC_JS_DEBUGGER.__STDOUT__').join('this.stdout')
+      stderrCode = stderrCode.split('AC_JS_DEBUGGER.__STDERR__').join('this.stderr')
+      eval(stdoutCode)
+      eval(stderrCode)
+      code = stdinCode + "\n\n" + this.code
       let callback = new Function(code);
       callback();
     },
-    getStdio() {
-      return `
-      let require = (arg)  => {
-        return {
-          readFileSync : (type, string_type) => {
-            return \`${this.stdin}\`  
-          }
-        }
-      }`;
+    initEditor() {
+      let code = (new SnippetsStorage()).get()
+      this.code = code
     }
   },
   mounted() {
@@ -163,9 +145,9 @@ export default {
     } else {
       this.code = defaultCode;
     }
-    let editorStorage = new EditorSettingsStorage();
-    if (editorStorage.get() !== null) {
-      this.editorStatus = editorStorage.get();
+
+    if (this.editorStatus.chacheStatus === true) {
+      this.code = (new EditorChacheStorage()).get()
     }
   }
 };

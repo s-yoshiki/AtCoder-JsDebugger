@@ -1,7 +1,6 @@
 <template>
   <b-container>
     <b-button variant="success" v-on:click="save">Save</b-button>
-    <b-button variant="light" v-on:click="clear">初期化</b-button>
     &nbsp; {{showMsg}}
     <br>&nbsp;
     <MonacoEditor
@@ -16,35 +15,37 @@
 </template>
 <script>
 import MonacoEditor from "vue-monaco"
-import {SnippetsStorage, EditorSettingsStorage} from "@/libs/Storages";
+import { keys, EditorSettingsStorage } from "@/libs/Storages"
+import LocalStorage from "@/libs/LocalStorage"
+import {defaultCode} from '@/libs/StaticStrings'
 export default {
   components: {
     MonacoEditor,
   },
   data() {
     return {
-      code:'',
+      code:'{}',
       showMsg:'',
-      storage: new SnippetsStorage(),
       editor:(new EditorSettingsStorage()).get(),
     }
   },
   methods: {
-    init() {
-      this.code = this.storage.get()
-    },
     save() {
-      this.storage.set(this.code)
-      this.showMsg = '保存しました'
+      try {
+        let obj = JSON.parse(this.code)
+        for (let key in keys) {
+            if (obj.data[key]) {
+                let storage = new LocalStorage(key)
+                storage.set(obj.data[key])
+            }
+        }
+        this.showMsg = '保存しました'
+      } catch(e) {
+        this.showMsg = 'エラー' + e
+      }
     },
-    clear() {
-      this.storage.reset()
-      this.code = this.storage.get()
-      this.showMsg = '初期化しました'
-    }
   },
   mounted() {
-    this.init()
   }
 }
 </script>
