@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <p>
       エディタに関する設定を行います。
       設定内容はブラウザのLocalStorageに保存されます。

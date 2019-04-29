@@ -14,11 +14,11 @@
       </b-col>
       <b-col class="col-sm-9 col-sm-offset-3 content">
         <br>
-          <b-container>
-            <h2>{{mainTitle}}</h2>
-            <p>{{mainDesc}}</p>
-            <hr>
-          </b-container>
+        <b-container fluid>
+          <h2>{{mainTitle}}</h2>
+          <p>{{mainDesc}}</p>
+          <hr>
+        </b-container>
         <router-view/>
       </b-col>
     </b-row>
