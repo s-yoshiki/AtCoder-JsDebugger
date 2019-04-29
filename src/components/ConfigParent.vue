@@ -2,7 +2,7 @@
   <div class="wrapper">
     <GlobalHeader></GlobalHeader>
     <b-row>
-      <b-col class="col-sm-3 hidden-xs">
+      <b-col>
         <div class="sidebar">
           <b-list-group>
             <b-list-group-item v-for="(item, key) in configs" :key="key" :href="item.url">
@@ -12,14 +12,17 @@
           </b-list-group>
         </div>
       </b-col>
-      <b-col class="col-sm-9 col-sm-offset-3 content">
+      <b-col cols="9">
         <br>
-        <b-container fluid>
-          <h2>{{mainTitle}}</h2>
-          <p>{{mainDesc}}</p>
-          <hr>
-        </b-container>
-        <router-view/>
+        <div class="content">
+          <br>
+          <b-container fluid>
+            <h2>{{mainTitle}}</h2>
+            <p>{{mainDesc}}</p>
+            <hr>
+          </b-container>
+          <router-view/>
+        </div>
       </b-col>
     </b-row>
   </div>
@@ -69,14 +72,14 @@ export default {
   width:20%;
 }
 
-.content {
+/* .content {
   width:100%;
   position: fixed;
   top: 56px;
   bottom: 0;
   left: 0%;
   overflow-y: auto;
-}
+} */
 
 @media screen and (min-width: 768px) {
   .sidebar {
@@ -85,17 +88,18 @@ export default {
     bottom: 0;
     left: 0;
     display: block;
-    overflow-x: hidden;
-    overflow-y: auto
+    /* overflow-x: hidden; */
+    overflow-y: auto;
+    width:18%;
   }
 
-  .content {
+  /* .content {
     width:80%;
     position: fixed;
     top: 56px;
     bottom: 0;
     left: 22%;
     overflow-y: auto;
-  }
+  } */
 }
 </style>
