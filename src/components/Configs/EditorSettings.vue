@@ -48,6 +48,23 @@
     <hr>
     <b-row>
       <b-col cols="10">
+        <strong>標準入出力ペインのサイズ</strong>
+        <br>
+        <small>標準入出力ペインのサイズを変更します。</small>
+      </b-col>
+      <b-col class="text-center">
+        <b-form-select
+          v-model="status.paineSize"
+          :options="paineSizeOption"
+          class="mb-3"
+          size="sm"
+        ></b-form-select>
+      </b-col>
+    </b-row>
+
+    <hr>
+    <b-row>
+      <b-col cols="10">
         <strong>設定の初期化</strong>
         <br>
         <small>全ての設定を初期状態にします。</small>
@@ -62,48 +79,55 @@
     &nbsp;{{saveMsg}}
   </b-container>
 </template>
+
 <script>
-import { SnippetsStorage, EditorSettingsStorage } from "@/libs/Storages";
-import LocalStorage from "@/libs/LocalStorage";
+import { EditorSettingsStorage, keys } from '@/libs/Storages'
+import LocalStorage from '@/libs/LocalStorage'
 export default {
-  data() {
+  data () {
     return {
       storage: new EditorSettingsStorage(),
-      saveMsg: "",
+      saveMsg: '',
       themeColorOption: [
-        { value: "vs", text: "default" },
-        { value: "vs-dark", text: "dark" },
-        { value: "hc-black", text: "high contrast" }
+        { value: 'vs', text: 'default' },
+        { value: 'vs-dark', text: 'dark' },
+        { value: 'hc-black', text: 'high contrast' }
+      ],
+      paineSizeOption: [
+        { value: '150', text: 'small' },
+        { value: '200', text: 'default' },
+        { value: '250', text: 'large' }
       ],
       status: {
         errorpaineStatus: false,
         chacheStatus: false,
-        themeColor: 'vs'
+        themeColor: 'vs',
+        paineSize: '200'
       }
-    };
+    }
   },
   methods: {
-    init() {
-      let settings = this.storage.get();
+    init () {
+      let settings = this.storage.get()
       if (settings != null) {
-        this.status = settings;
+        this.status = settings
       }
     },
-    save() {
-      this.storage.set(this.status);
-      this.saveMsg = "保存しました";
+    save () {
+      this.storage.set(this.status)
+      this.saveMsg = '保存しました'
     },
-    clear() {
-      this.status = {};
-      this.storage.set(this.status);
+    clear () {
+      this.status = {}
+      this.storage.set(this.status)
       for (let key in keys) {
         (new LocalStorage(keys[key])).set({})
       }
-      this.saveMsg = "初期化しました";
+      this.saveMsg = '初期化しました'
     }
   },
-  mounted() {
-    this.init();
+  mounted () {
+    this.init()
   }
-};
+}
 </script>

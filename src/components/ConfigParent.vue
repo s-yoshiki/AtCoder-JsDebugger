@@ -14,23 +14,23 @@
       </b-col>
       <b-col cols="9">
         <br>
-        <div class="content">
           <br>
           <b-container fluid>
-            <h2>{{mainTitle}}</h2>
-            <p>{{mainDesc}}</p>
-            <hr>
+            <div class="content">
+              <h3>{{mainTitle}}</h3>
+              <p>{{mainDesc}}</p>
+              <hr>
+              <router-view/>
+            </div>
           </b-container>
-          <router-view/>
-        </div>
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
-import GlobalHeader from "./GlobalHeader";
-import ConfigPagesConf from "@/libs/ConfigPagesConf"
+import GlobalHeader from './GlobalHeader'
+import ConfigPagesConf from '@/libs/ConfigPagesConf'
 
 export default {
   components: {
@@ -38,31 +38,31 @@ export default {
     mainTitle:'',
     mainDesc:'',
   },
-  beforeRouteUpdate(to, from, next) {
+  beforeRouteUpdate (to, from, next) {
     // URLが変わった時モデルを更新する
     this.renderHeader()
-    next();
+    next()
   },
-  data() {
+  data () {
     return {
       configs:ConfigPagesConf,
     }
   },
   methods:{
-    renderHeader() {
+    renderHeader () {
       let url = location.href.split("#")[1]
       ConfigPagesConf.forEach(e => {
         if (e.url.split("#")[1] == url) {
           this.mainTitle = e.title
           this.mainDesc = e.desc
         }
-      });
+      })
     }
   },
-  created() {
+  created () {
     this.renderHeader()
   }
-};
+}
 </script>
 
 <style>
@@ -75,7 +75,7 @@ export default {
 /* .content {
   width:100%;
   position: fixed;
-  top: 56px;
+  top: 80px;
   bottom: 0;
   left: 0%;
   overflow-y: auto;
@@ -93,13 +93,13 @@ export default {
     width:18%;
   }
 
-  /* .content {
-    width:80%;
+  .content {
+    width:70%;
     position: fixed;
-    top: 56px;
+    top: 80px;
     bottom: 0;
-    left: 22%;
+    display: block;
     overflow-y: auto;
-  } */
+  }
 }
 </style>

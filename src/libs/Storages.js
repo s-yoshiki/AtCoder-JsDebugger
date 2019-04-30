@@ -17,16 +17,11 @@ export const keys = {
  */
 export class EditorSettingsStorage extends LocalStorage {
   constructor() {
-    super(keys.EDITOR_SETTINGS)
-  }
-  /**
-   * 初期状態に戻す
-   */
-  reset() {
-    this.set({
+    super(keys.EDITOR_SETTINGS, {
       errorpaineStatus: false,
       chacheStatus: false,
-      themeColor: 'vs'
+      themeColor: 'vs',
+      paineSize: '200',
     })
   }
 }
@@ -35,13 +30,7 @@ export class EditorSettingsStorage extends LocalStorage {
  */
 export class SnippetsStorage extends LocalStorage {
   constructor() {
-    super(keys.SNIPPETS)
-  }
-  /**
-   * 初期状態に戻す
-   */
-  reset() {
-    this.set(defaultCode)
+    super(keys.SNIPPETS, defaultCode)
   }
 }
 /**
@@ -49,13 +38,7 @@ export class SnippetsStorage extends LocalStorage {
  */
 export class StdinStorage extends LocalStorage {
   constructor() {
-    super(keys.STDIN)
-  }
-  /**
-   * 初期状態に戻す
-   */
-  reset() {
-    this.set(defaultStdin)
+    super(keys.STDIN, defaultStdin)
   }
 }
 /**
@@ -63,13 +46,7 @@ export class StdinStorage extends LocalStorage {
  */
 export class StdoutStorage extends LocalStorage {
   constructor() {
-    super(keys.STDOUT)
-  }
-  /**
-   * 初期状態に戻す
-   */
-  reset() {
-    this.set(defaultStdout)
+    super(keys.STDOUT, defaultStdout)
   }
 }
 /**
@@ -77,13 +54,7 @@ export class StdoutStorage extends LocalStorage {
  */
 export class StderrStorage extends LocalStorage {
   constructor() {
-    super(keys.STDERR)
-  }
-  /**
-   * 初期状態に戻す
-   */
-  reset() {
-    this.set(defaultStderr)
+    super(keys.STDERR, defaultStderr)
   }
 }
 /**
@@ -91,12 +62,6 @@ export class StderrStorage extends LocalStorage {
  */
 export class EditorChacheStorage extends LocalStorage {
   constructor() {
-    super(keys.EDITOR_CHACHE)
-  }
-  /**
-   * 初期状態に戻す
-   */
-  reset() {
-    this.set('')
+    super(keys.EDITOR_CHACHE, '')
   }
 }

@@ -19,45 +19,46 @@
     ></MonacoEditor>
   </b-container>
 </template>
+
 <script>
-import MonacoEditor from "vue-monaco";
-import { keys, EditorSettingsStorage} from "@/libs/Storages";
-import LocalStorage from "@/libs/LocalStorage";
-import { defaultCode } from "@/libs/StaticStrings";
+import MonacoEditor from 'vue-monaco'
+import { keys, EditorSettingsStorage} from '@/libs/Storages'
+import LocalStorage from '@/libs/LocalStorage'
+import { defaultCode } from '@/libs/StaticStrings'
 export default {
   components: {
     MonacoEditor
   },
   data() {
     return {
-      code: "{}",
-      showMsg: "",
-      editor:(new EditorSettingsStorage()).get(),
-    };
+      code: '{}',
+      showMsg: '',
+      editor: (new EditorSettingsStorage()).get()
+    }
   },
   methods: {
-    init() {
+    init () {
       this.code = this.getJsonCodes()
     },
-    download() {
-      let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
-      let content = this.getJsonCodes();
-      let blob = new Blob([ bom, content ], { "type" : "text/json" });
+    download () {
+      let bom = new Uint8Array([0xEF, 0xBB, 0xBF])
+      let content = this.getJsonCodes()
+      let blob = new Blob([ bom, content ], { 'type' : 'text/json' })
       if (window.navigator.msSaveBlob) { 
-          window.navigator.msSaveBlob(blob, "settings.json"); 
-          window.navigator.msSaveOrOpenBlob(blob, "settings.json"); 
+          window.navigator.msSaveBlob(blob, 'settings.json') 
+          window.navigator.msSaveOrOpenBlob(blob, 'settings.json') 
       } else {
-          return window.URL.createObjectURL(blob);
+          return window.URL.createObjectURL(blob)
       }
     },
-    getJsonCodes() {
+    getJsonCodes () {
       let result = {
-        header:{
-          name:'atcoder-jsdebugger',
-          v:'1.0.0',
-          datetime:String(new Date()),
+        header: {
+          name: 'atcoder-jsdebugger',
+          v: '1.0.0',
+          datetime: String(new Date())
         },
-        data:{}
+        data: {}
       }
       for (let i in keys) {
         let storage = new LocalStorage(keys[i])
@@ -69,12 +70,12 @@ export default {
       return JSON.stringify(result, null, '\t')
     }
   },
-  mounted() {
-    this.init();
-    let downloadLink = this.$refs["download-link"]
-    downloadLink.addEventListener("click", () => {
+  mounted () {
+    this.init()
+    let downloadLink = this.$refs['download-link']
+    downloadLink.addEventListener('click', () => {
       downloadLink.href = this.download()
     })
   }
-};
+}
 </script>

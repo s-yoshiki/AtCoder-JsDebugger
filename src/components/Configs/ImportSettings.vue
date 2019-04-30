@@ -13,39 +13,37 @@
     ></MonacoEditor>
   </b-container>
 </template>
+
 <script>
-import MonacoEditor from "vue-monaco"
-import { keys, EditorSettingsStorage } from "@/libs/Storages"
-import LocalStorage from "@/libs/LocalStorage"
-import {defaultCode} from '@/libs/StaticStrings'
+import MonacoEditor from 'vue-monaco'
+import { keys, EditorSettingsStorage } from '@/libs/Storages'
+import LocalStorage from '@/libs/LocalStorage'
 export default {
   components: {
-    MonacoEditor,
+    MonacoEditor
   },
-  data() {
+  data () {
     return {
-      code:'{}',
-      showMsg:'',
-      editor:(new EditorSettingsStorage()).get(),
+      code: '{}',
+      showMsg: '',
+      editor: (new EditorSettingsStorage()).get()
     }
   },
   methods: {
-    save() {
+    save () {
       try {
         let obj = JSON.parse(this.code)
         for (let key in keys) {
-            if (obj.data[key]) {
-                let storage = new LocalStorage(key)
-                storage.set(obj.data[key])
-            }
+          if (obj.data[key]) {
+            let storage = new LocalStorage(key)
+            storage.set(obj.data[key])
+          }
         }
         this.showMsg = '保存しました'
-      } catch(e) {
-        this.showMsg = 'エラー' + e
+      } catch (e) {
+        this.showMsg = 'エラー ' + e
       }
-    },
-  },
-  mounted() {
+    }
   }
 }
 </script>

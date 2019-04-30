@@ -6,8 +6,12 @@ export default class LocalStorage {
    * ストレージキー
    * @param {String} key 
    */
-  constructor(key) {
+  constructor(key, defaultParam = {}) {
+    // メンバ変数
     this.storageKey = key
+    this.defaultParam = null
+    // 初期処理
+    this.setDefaultParam(defaultParam)
     if (!this.hasItem()) {
       this.reset()
     }
@@ -31,7 +35,7 @@ export default class LocalStorage {
     localStorage.setItem(
       this.storageKey,
       JSON.stringify(itemObj)
-    );
+    )
   }
   /**
    * ストレージキー
@@ -46,7 +50,7 @@ export default class LocalStorage {
    */
   hasItem() {
     let item = localStorage.getItem(this.storageKey)
-    if (item == null || item == undefined || item === {}) {
+    if (item === null || item === undefined || item === {}) {
       return false
     }
     return true
@@ -55,6 +59,12 @@ export default class LocalStorage {
    * アイテムの初期化値を設定
    */
   reset() {
-    this.set({})
+    this.set(this.defaultParam)
+  }
+  /**
+   * デフォルト値を持たせる
+   */
+  setDefaultParam(arg) {
+    this.defaultParam = arg
   }
 }

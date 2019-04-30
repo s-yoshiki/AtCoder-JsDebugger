@@ -35,10 +35,27 @@
         </a>
       </b-col>
       <b-col>
-        <h3>Credits</h3>
-        <a href="https://s-yoshiki.github.io">s-yoshiki</a>
+        <h3>Author</h3>
+        <a href="https://s-yoshiki.github.io">
+          <img
+            src="https://ja.gravatar.com/userimage/115503673/c65df92a8b6d270c8eeb74f643b7e114.jpg"
+            class="author-img"
+          >
+        </a>
+        <br>
+        <a href="https://s-yoshiki.github.io">
+          s-yoshiki
+        </a>
       </b-col>
     </b-row>
     <hr>
   </b-container>
 </template>
+
+<style>
+.author-img {
+  border-radius: 50%;
+  width:  50px;
+  height: 50px;
+}
+</style>

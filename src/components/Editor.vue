@@ -12,11 +12,12 @@
       </b-col>
       <b-col>
         <GlobalHeader></GlobalHeader>
-        <b-container class="fullheight">
+        <b-container :class="css.theme + ' fullheight'">
+          <!-- <b-container class="fullheight" :style="`background-color:${backGroundColor}}`"> -->
           <label>input</label>
-          <div class="std-wrapper">
+          <div :class="css.wrapper">
             <monaco-editor
-              style="height:200px;"
+              :style="`height:${editorStatus.paineSize}px`"
               class="editor-min"
               v-model="stdin"
               language
@@ -29,29 +30,29 @@
               <tr>
                 <td>
                   <label>output</label>
-                <div class="std-wrapper">
-                  <monaco-editor
-                    style="height:200px;"
-                    class="editor-min"
-                    v-model="stdout"
-                    language
-                    ref="stdout"
-                    :theme="editorStatus.themeColor"
-                  ></monaco-editor>
-                </div>
+                  <div :class="css.wrapper">
+                    <monaco-editor
+                      :style="`height:${editorStatus.paineSize}px`"
+                      class="editor-min"
+                      v-model="stdout"
+                      language
+                      ref="stdout"
+                      :theme="editorStatus.themeColor"
+                    ></monaco-editor>
+                  </div>
                 </td>
                 <td>
-                <label>error</label>
-                <div class="std-wrapper">
-                  <monaco-editor
-                    style="height:200px;"
-                    class="editor-min"
-                    v-model="stderr"
-                    language
-                    ref="stderr"
-                    :theme="editorStatus.themeColor  "
-                  ></monaco-editor>
-                </div>
+                  <label>error</label>
+                  <div :class="css.wrapper">
+                    <monaco-editor
+                      :style="`height:${editorStatus.paineSize}px`"
+                      class="editor-min"
+                      v-model="stderr"
+                      language
+                      ref="stderr"
+                      :theme="editorStatus.themeColor  "
+                    ></monaco-editor>
+                  </div>
                 </td>
               </tr>
             </table>
@@ -60,8 +61,15 @@
             <b-row>
               <b-col>
                 <label>output</label>
-                <div class="std-wrapper">
-                  <monaco-editor style="height:200px;" class="editor-min" v-model="stdout" language ref="stdout" :theme="editorStatus.themeColor "></monaco-editor>
+                <div :class="css.wrapper">
+                  <monaco-editor
+                    :style="`height:${editorStatus.paineSize}px`"
+                    class="editor-min"
+                    v-model="stdout"
+                    language
+                    ref="stdout"
+                    :theme="editorStatus.themeColor "
+                  ></monaco-editor>
                 </div>
               </b-col>
             </b-row>
@@ -73,7 +81,7 @@
                 <b-button block variant="primary" v-on:click="run">Run</b-button>
               </b-col>
               <b-col>
-                <b-button block variant="secondary" v-on:click="initEditor">Clear</b-button>
+                <b-button block variant="dark" v-on:click="initEditor">Init</b-button>
               </b-col>
             </b-row>
           </div>
@@ -84,80 +92,115 @@
 </template>
 
 <script>
-import MonacoEditor from "vue-monaco";
-import GlobalHeader from "./GlobalHeader";
-import { defaultCode } from "@/libs/StaticStrings";
+import MonacoEditor from 'vue-monaco'
+import GlobalHeader from './GlobalHeader'
+import { defaultCode } from '@/libs/StaticStrings'
 import {
-  SnippetsStorage, EditorSettingsStorage, EditorChacheStorage,
-  StdinStorage, StdoutStorage, StderrStorage
-} from "@/libs/Storages";
+  SnippetsStorage,
+  EditorSettingsStorage,
+  EditorChacheStorage,
+  StdinStorage,
+  StdoutStorage,
+  StderrStorage
+} from '@/libs/Storages'
 
 export default {
   components: {
     MonacoEditor,
     GlobalHeader
   },
-  data() {
+  data () {
     return {
       code: '',
-      stdin: "",
-      stdout: "",
-      stderr: "",
-      editorStatus: (new EditorSettingsStorage()).get()
-    };
+      stdin: '',
+      stdout: '',
+      stderr: '',
+      css: {
+        theme: 'default-theme',
+        wrapper: 'default-std-wrapper'
+      },
+      editorStatus: new EditorSettingsStorage().get()
+    }
   },
-  watch:{
-    code() {
-     (new EditorChacheStorage()).set(this.code)
+  watch: {
+    code () {
+      new EditorChacheStorage().set(this.code)
     }
   },
   methods: {
-    run() {
-      this.stdout = "";
-      this.stderr = "";
+    run () {
+      this.stdout = ''
+      this.stderr = ''
       let code = ''
-      let stdinCode = (new StdinStorage()).get()
-      let stdoutCode = (new StdoutStorage()).get()
-      let stderrCode = (new StderrStorage()).get()
+      let stdinCode = new StdinStorage().get()
+      let stdoutCode = new StdoutStorage().get()
+      let stderrCode = new StderrStorage().get()
       let AC_JS_DEBUGGER = {
-        __STDIN__:this.stdin,
-        __STDOUT__:'',
-        __STDERR__:''
+        __STDIN__: this.stdin,
+        __STDOUT__: '',
+        __STDERR__: ''
       }
-      stdinCode = stdinCode.split('AC_JS_DEBUGGER.__STDIN__').join(`\`${this.stdin}\``)
-      stdoutCode = stdoutCode.split('AC_JS_DEBUGGER.__STDOUT__').join('this.stdout')
-      stderrCode = stderrCode.split('AC_JS_DEBUGGER.__STDERR__').join('this.stderr')
+      stdinCode = stdinCode
+        .split('AC_JS_DEBUGGER.__STDIN__')
+        .join(`\`${this.stdin}\``)
+      stdoutCode = stdoutCode
+        .split('AC_JS_DEBUGGER.__STDOUT__')
+        .join('this.stdout')
+      stderrCode = stderrCode
+        .split('AC_JS_DEBUGGER.__STDERR__')
+        .join('this.stderr')
       eval(stdoutCode)
       eval(stderrCode)
-      code = stdinCode + "\n\n" + this.code
-      let callback = new Function(code);
-      callback();
+      code = stdinCode + '\n\n' + this.code
+      let callback = new Function(code)
+      callback()
     },
-    initEditor() {
-      let code = (new SnippetsStorage()).get()
+    initEditor () {
+      let code = new SnippetsStorage().get()
       this.code = code
     }
   },
-  mounted() {
-    let snippetsStorage = new SnippetsStorage();
+  mounted () {
+    let snippetsStorage = new SnippetsStorage()
     if (snippetsStorage.get() != null) {
-      this.code = snippetsStorage.get();
+      this.code = snippetsStorage.get()
     } else {
-      this.code = defaultCode;
+      this.code = defaultCode
     }
 
     if (this.editorStatus.chacheStatus === true) {
-      this.code = (new EditorChacheStorage()).get()
+      this.code = new EditorChacheStorage().get()
+    }
+
+    let theme = this.editorStatus.themeColor
+    if (theme === 'vs-dark' || theme === 'hc-black') {
+      this.css = {
+        theme: 'dark-theme',
+        wrapper: 'dark-std-wrapper'
+      }
+    } else {
+      this.css = {
+        theme: 'default-theme',
+        wrapper: 'default-std-wrapper'
+      }
     }
   }
-};
+}
 </script>
-
 <style>
+.dark-theme {
+  background-color: #1f1f1f;
+  color: #f1f1f1;
+}
+
+.default-theme {
+  background-color: #ffffff;
+  color: #3f3f3f;
+}
+
 .editor-container {
   overflow: hidden;
   height: 100%;
-  background-color: #1f1f1f;
 }
 .editor {
   height: 100%;
@@ -170,28 +213,23 @@ export default {
   width: 100%;
 }
 
-.editor-half {
-  height: 200px;
-  border-color: #fff;
-  width: 50%;
-}
 .fullheight {
   height: 100%;
 }
 
-label {
-  color: #f3f3f3;
+.dark-std-wrapper {
+  background-color: #f1f1f1;
+  padding: 1px;
 }
 
-.std-wrapper {
-  background-color: #fff;
-  /* margin: 1px; */
+.default-std-wrapper {
+  background-color: #1f1f1f;
   padding: 1px;
 }
 
 table {
-  width:100%;
-}
+  width: 100%;
+}∏
 table > tr {
   width: 100%;
 }
