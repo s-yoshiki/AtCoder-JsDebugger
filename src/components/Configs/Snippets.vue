@@ -15,8 +15,8 @@
   </b-container>
 </template>
 <script>
-import MonacoEditor from "vue-monaco"
-import {SnippetsStorage, EditorSettingsStorage} from "@/libs/Storages";
+import MonacoEditor from 'vue-monaco'
+import {SnippetsStorage, EditorSettingsStorage} from '@/libs/Storages'
 export default {
   components: {
     MonacoEditor,
@@ -30,20 +30,20 @@ export default {
     }
   },
   methods: {
-    init() {
+    init () {
       this.code = this.storage.get()
     },
-    save() {
+    save () {
       this.storage.set(this.code)
       this.showMsg = '保存しました'
     },
-    clear() {
+    clear () {
       this.storage.reset()
       this.code = this.storage.get()
       this.showMsg = '初期化しました'
     }
   },
-  mounted() {
+  mounted () {
     this.init()
   }
 }

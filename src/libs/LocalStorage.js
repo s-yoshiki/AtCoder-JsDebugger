@@ -35,7 +35,7 @@ export default class LocalStorage {
     localStorage.setItem(
       this.storageKey,
       JSON.stringify(itemObj)
-    );
+    )
   }
   /**
    * ストレージキー
@@ -50,7 +50,7 @@ export default class LocalStorage {
    */
   hasItem() {
     let item = localStorage.getItem(this.storageKey)
-    if (item == null || item == undefined || item === {}) {
+    if (item === null || item === undefined || item === {}) {
       return false
     }
     return true
