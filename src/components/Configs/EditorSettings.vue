@@ -48,6 +48,23 @@
     <hr>
     <b-row>
       <b-col cols="10">
+        <strong>標準入出力ペインのサイズ</strong>
+        <br>
+        <small>標準入出力ペインのサイズを変更します。</small>
+      </b-col>
+      <b-col class="text-center">
+        <b-form-select
+          v-model="status.paineSize"
+          :options="paineSizeOption"
+          class="mb-3"
+          size="sm"
+        ></b-form-select>
+      </b-col>
+    </b-row>
+
+    <hr>
+    <b-row>
+      <b-col cols="10">
         <strong>設定の初期化</strong>
         <br>
         <small>全ての設定を初期状態にします。</small>
@@ -75,10 +92,16 @@ export default {
         { value: "vs-dark", text: "dark" },
         { value: "hc-black", text: "high contrast" }
       ],
+      paineSizeOption: [
+        { value: "150", text: "small" },
+        { value: "200", text: "default" },
+        { value: "250", text: "large" }
+      ],
       status: {
         errorpaineStatus: false,
         chacheStatus: false,
-        themeColor: 'vs'
+        themeColor: 'vs',
+        paineSize: '200',
       }
     };
   },
