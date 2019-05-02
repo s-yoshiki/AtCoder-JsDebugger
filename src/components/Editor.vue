@@ -184,6 +184,10 @@ export default {
         wrapper: 'default-std-wrapper'
       }
     }
+
+    window.addEventListener('resize', (e) => {
+      location.reload()
+    })
   }
 }
 </script>
