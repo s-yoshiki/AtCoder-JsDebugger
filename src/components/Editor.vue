@@ -13,7 +13,6 @@
       <b-col>
         <GlobalHeader></GlobalHeader>
         <b-container :class="css.theme + ' fullheight'">
-          <!-- <b-container class="fullheight" :style="`background-color:${backGroundColor}}`"> -->
           <label>input</label>
           <div :class="css.wrapper">
             <monaco-editor
