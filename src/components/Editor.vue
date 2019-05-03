@@ -186,7 +186,10 @@ export default {
     }
 
     window.addEventListener('resize', (e) => {
-      location.reload()
+      this.$refs.editor.getMonaco().layout()
+      this.$refs.stdin.getMonaco().layout()
+      this.$refs.stdout.getMonaco().layout()
+      this.$refs.stderr.getMonaco().layout()
     })
   }
 }
