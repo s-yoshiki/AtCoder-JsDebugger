@@ -13,7 +13,6 @@
       <b-col>
         <GlobalHeader></GlobalHeader>
         <b-container :class="css.theme + ' fullheight'">
-          <!-- <b-container class="fullheight" :style="`background-color:${backGroundColor}}`"> -->
           <label>input</label>
           <div :class="css.wrapper">
             <monaco-editor
@@ -184,6 +183,13 @@ export default {
         wrapper: 'default-std-wrapper'
       }
     }
+
+    window.addEventListener('resize', (e) => {
+      this.$refs.editor.getMonaco().layout()
+      this.$refs.stdin.getMonaco().layout()
+      this.$refs.stdout.getMonaco().layout()
+      this.$refs.stderr.getMonaco().layout()
+    })
   }
 }
 </script>
