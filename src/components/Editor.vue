@@ -91,6 +91,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import MonacoEditor from 'vue-monaco'
 import GlobalHeader from './GlobalHeader'
 import { defaultCode } from '@/libs/StaticStrings'
@@ -102,6 +103,7 @@ import {
   StdoutStorage,
   StderrStorage
 } from '@/libs/Storages'
+
 
 export default {
   components: {
@@ -183,12 +185,13 @@ export default {
         wrapper: 'default-std-wrapper'
       }
     }
-
     window.addEventListener('resize', (e) => {
       this.$refs.editor.getMonaco().layout()
       this.$refs.stdin.getMonaco().layout()
       this.$refs.stdout.getMonaco().layout()
-      this.$refs.stderr.getMonaco().layout()
+      if (this.$refs.stderr) {
+        this.$refs.stderr.getMonaco().layout()
+      }
     })
   }
 }
@@ -210,7 +213,7 @@ export default {
 }
 .editor {
   height: 100%;
-  width: 100%;
+  width: 51%;
   position: absolute;
 }
 .editor-min {
