@@ -1,3 +1,4 @@
+/* eslint-disable */
 import LocalStorage from './LocalStorage'
 import { defaultCode, defaultStdin, defaultStdout, defaultStderr } from '@/libs/StaticStrings'
 

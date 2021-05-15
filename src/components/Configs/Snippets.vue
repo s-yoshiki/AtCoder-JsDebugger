@@ -2,10 +2,9 @@
   <b-container fluid>
     <b-button variant="success" v-on:click="save">Save</b-button>
     <b-button variant="light" v-on:click="clear">初期化</b-button>
-    &nbsp; {{showMsg}}
-    <br>&nbsp;
+    &nbsp; {{ showMsg }} <br />&nbsp;
     <MonacoEditor
-      style="height:350px;width:95%;"
+      style="height: 350px; width: 95%"
       class="editor"
       v-model="code"
       language="javascript"
@@ -15,35 +14,36 @@
   </b-container>
 </template>
 <script>
-import MonacoEditor from 'vue-monaco'
-import {SnippetsStorage, EditorSettingsStorage} from '@/libs/Storages'
+/* eslint-disable */
+import MonacoEditor from "vue-monaco";
+import { SnippetsStorage, EditorSettingsStorage } from "@/libs/Storages";
 export default {
   components: {
-    MonacoEditor,
+    MonacoEditor
   },
   data() {
     return {
-      code:'',
-      showMsg:'',
+      code: "",
+      showMsg: "",
       storage: new SnippetsStorage(),
-      editor:(new EditorSettingsStorage()).get(),
-    }
+      editor: new EditorSettingsStorage().get()
+    };
   },
   methods: {
-    init () {
-      this.code = this.storage.get()
+    init() {
+      this.code = this.storage.get();
     },
-    save () {
-      this.storage.set(this.code)
-      this.showMsg = '保存しました'
+    save() {
+      this.storage.set(this.code);
+      this.showMsg = "保存しました";
     },
-    clear () {
-      this.storage.reset()
-      this.code = this.storage.get()
-      this.showMsg = '初期化しました'
-    }
+    clear() {
+      this.storage.reset();
+      this.code = this.storage.get();
+      this.showMsg = "初期化しました";
+    },
   },
-  mounted () {
+  mounted() {
     this.init()
   }
 }

@@ -1,12 +1,14 @@
+/* eslint-disable */
+
 /**
  * localStorage管理基底クラス
  */
 export default class LocalStorage {
   /**
    * ストレージキー
-   * @param {String} key 
+   * @param {String} key オブジェクトのキー
    */
-  constructor(key, defaultParam = {}) {
+  constructor (key, defaultParam = {}) {
     // メンバ変数
     this.storageKey = key
     this.defaultParam = null
@@ -19,7 +21,7 @@ export default class LocalStorage {
   /**
    * アイテム取得
    */
-  get() {
+  get () {
     let item = localStorage.getItem(this.storageKey)
     if (!this.hasItem()) {
       return {}
@@ -28,10 +30,9 @@ export default class LocalStorage {
   }
   /**
    * アイテム保存
-   * @param {String} storageId 
-   * @param {Object} itemObj
+   * @param {Object} itemObj アイテム名
    */
-  set(itemObj) {
+  set (itemObj) {
     localStorage.setItem(
       this.storageKey,
       JSON.stringify(itemObj)
@@ -41,14 +42,14 @@ export default class LocalStorage {
    * ストレージキー
    * @return {String} StorageKey
    */
-  getStorageKey() {
+  getStorageKey () {
     return this.storageKey
   }
   /**
    * アイテムがあるか
    * @return {Bool} status
    */
-  hasItem() {
+  hasItem () {
     let item = localStorage.getItem(this.storageKey)
     if (item === null || item === undefined || item === {}) {
       return false
@@ -58,13 +59,13 @@ export default class LocalStorage {
   /**
    * アイテムの初期化値を設定
    */
-  reset() {
+  reset () {
     this.set(this.defaultParam)
   }
   /**
    * デフォルト値を持たせる
    */
-  setDefaultParam(arg) {
+  setDefaultParam (arg) {
     this.defaultParam = arg
   }
 }

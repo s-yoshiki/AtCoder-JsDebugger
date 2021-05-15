@@ -16,6 +16,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import MonacoEditor from 'vue-monaco'
 import { EditorSettingsStorage, StderrStorage } from '@/libs/Storages'
 export default {

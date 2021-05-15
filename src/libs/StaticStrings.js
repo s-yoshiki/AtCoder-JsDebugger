@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default ''
 
 export const defaultCode = `"use strict"

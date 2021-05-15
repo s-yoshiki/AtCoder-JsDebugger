@@ -5,71 +5,77 @@
       <b-col>
         <div class="sidebar">
           <b-list-group>
-            <b-list-group-item v-for="(item, key) in configs" :key="key" :href="item.url">
-              <strong>{{item.title}}</strong><br>
-              <small>{{item.desc}}</small>
+            <b-list-group-item
+              v-for="(item, key) in configs"
+              :key="key"
+              :href="item.url"
+            >
+              <strong>{{ item.title }}</strong
+              ><br />
+              <small>{{ item.desc }}</small>
             </b-list-group-item>
           </b-list-group>
         </div>
       </b-col>
       <b-col cols="9">
-        <br>
-          <br>
-          <b-container fluid>
-            <div class="content">
-              <h3>{{mainTitle}}</h3>
-              <p>{{mainDesc}}</p>
-              <hr>
-              <router-view/>
-            </div>
-          </b-container>
+        <br />
+        <br />
+        <b-container fluid>
+          <div class="content">
+            <h3>{{ mainTitle }}</h3>
+            <p>{{ mainDesc }}</p>
+            <hr />
+            <router-view />
+          </div>
+        </b-container>
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
-import GlobalHeader from './GlobalHeader'
-import ConfigPagesConf from '@/libs/ConfigPagesConf'
+/* eslint-disable */
+import GlobalHeader from "./GlobalHeader";
+import ConfigPagesConf from "@/libs/ConfigPagesConf";
 
 export default {
   components: {
     GlobalHeader,
-    mainTitle:'',
-    mainDesc:'',
+    mainTitle: "",
+    mainDesc: "",
   },
-  beforeRouteUpdate (to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     // URLが変わった時モデルを更新する
-    this.renderHeader()
-    next()
+    this.renderHeader();
+    next();
   },
-  data () {
+  data() {
     return {
-      configs:ConfigPagesConf,
-    }
+      configs: ConfigPagesConf,
+    };
   },
-  methods:{
-    renderHeader () {
-      let url = location.href.split("#")[1]
-      ConfigPagesConf.forEach(e => {
+  methods: {
+    renderHeader() {
+      let url = location.href.split("#")[1];
+      ConfigPagesConf.forEach((e) => {
         if (e.url.split("#")[1] == url) {
-          this.mainTitle = e.title
-          this.mainDesc = e.desc
+          this.mainTitle = e.title;
+          this.mainDesc = e.desc;
         }
-      })
-    }
+      });
+    },
   },
-  created () {
-    this.renderHeader()
-  }
-}
+  created() {
+    this.renderHeader();
+  },
+};
 </script>
 
 <style>
 .sidebar {
   display: none;
-  background-color:#f3f3f3;
-  width:20%;
+  background-color: #f3f3f3;
+  width: 20%;
 }
 
 /* .content {
@@ -90,11 +96,11 @@ export default {
     display: block;
     /* overflow-x: hidden; */
     overflow-y: auto;
-    width:18%;
+    width: 18%;
   }
 
   .content {
-    width:70%;
+    width: 70%;
     position: fixed;
     top: 80px;
     bottom: 0;

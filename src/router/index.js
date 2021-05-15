@@ -27,51 +27,51 @@ export default new Router({
       component: ConfigParent,
       children: [
         {
-          path:'/config/',
-          name:'Config',
-          component:Config
+          path: '/config/',
+          name: 'Config',
+          component: Config
         },
         {
-          path:'/config/editor-settings',
-          name:'EditotTheme',
-          component:EditorSettings
+          path: '/config/editor-settings',
+          name: 'EditotTheme',
+          component: EditorSettings
         },
         {
-          path:'/config/snippets',
-          name:'Snippets',
-          component:Snippets
+          path: '/config/snippets',
+          name: 'Snippets',
+          component: Snippets
         },
         {
-          path:'/config/stdin',
-          name:'Stdin',
-          component:Stdin
+          path: '/config/stdin',
+          name: 'Stdin',
+          component: Stdin
         },
         {
-          path:'/config/stdout',
-          name:'Stdout',
-          component:Stdout
+          path: '/config/stdout',
+          name: 'Stdout',
+          component: Stdout
         },
         {
-          path:'/config/stderr',
-          name:'Stderr',
-          component:Stderr
+          path: '/config/stderr',
+          name: 'Stderr',
+          component: Stderr
         },
         {
-          path:'/config/import-settings',
-          name:'ImportSettings',
-          component:ImportSettings
+          path: '/config/import-settings',
+          name: 'ImportSettings',
+          component: ImportSettings
         },
         {
-          path:'/config/export-settings',
-          name:'ExportSettings',
-          component:ExportSettings
+          path: '/config/export-settings',
+          name: 'ExportSettings',
+          component: ExportSettings
         },
         {
-          path:'/config/about',
-          name:'About',
-          component:About
-        },
-      ],
-    },
+          path: '/config/about',
+          name: 'About',
+          component: About
+        }
+      ]
+    }
   ]
 })
