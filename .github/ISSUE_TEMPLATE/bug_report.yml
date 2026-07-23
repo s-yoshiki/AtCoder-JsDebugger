@@ -1,0 +1,61 @@
+name: Bug report
+description: 不具合を報告する
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        報告ありがとうございます。秘密情報や信頼できない実行コードは貼り付けないでください。
+  - type: textarea
+    id: summary
+    attributes:
+      label: 概要
+      description: 発生している問題を簡潔に説明してください。
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待する動作
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実際の動作
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: 実行言語
+      options:
+        - TypeScript
+        - JavaScript
+        - 実行機能以外
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: ブラウザとバージョン
+      placeholder: Chrome 140
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: 補足
+      description: エラー表示やスクリーンショットがあれば添付してください。

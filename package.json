@@ -22,7 +22,7 @@
     "lint:fix": "biome lint --write src",
     "format": "biome check --write src scripts vite.config.ts",
     "format:check": "biome check src scripts vite.config.ts",
-    "check": "pnpm run format:check && pnpm run lint && pnpm run typecheck"
+    "check": "biome check src scripts vite.config.ts && tsc --noEmit"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
