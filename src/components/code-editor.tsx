@@ -1,5 +1,11 @@
+import type { editor } from 'monaco-editor';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+
+export interface EditorProblems {
+  errors: number;
+  warnings: number;
+}
 
 export interface CodeEditorProps {
   value: string;
@@ -10,6 +16,9 @@ export interface CodeEditorProps {
   compact?: boolean;
   className?: string;
   ariaLabel?: string;
+  path?: string;
+  onMount?: (instance: editor.IStandaloneCodeEditor) => void;
+  onProblemsChange?: (problems: EditorProblems) => void;
 }
 
 const MonacoCodeEditor = lazy(() => import('./monaco-code-editor'));

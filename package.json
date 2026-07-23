@@ -1,7 +1,7 @@
 {
   "name": "atcoder-js-debugger",
   "version": "2.0.0",
-  "description": "AtCoder 向けの JavaScript 実行・デバッグ環境 (ブラウザ完結)",
+  "description": "AtCoder 向けの JavaScript・TypeScript 実行環境 (ブラウザ完結)",
   "author": "Shinagawa Yoshiki <s.yoshiki1123@gmail.com>",
   "license": "MIT",
   "private": true,
@@ -34,7 +34,8 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router": "^8.2.0",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.6.0",
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.5",
@@ -44,7 +45,6 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.4",
     "tailwindcss": "^4.3.3",
-    "typescript": "^6.0.3",
     "vite": "^8.1.5"
   }
 }

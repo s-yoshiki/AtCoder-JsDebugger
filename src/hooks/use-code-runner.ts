@@ -11,6 +11,10 @@ export function useCodeRunner() {
     controllerRef.current?.abort();
   }, []);
 
+  const clear = useCallback(() => {
+    setOutcome(null);
+  }, []);
+
   const run = useCallback(async (request: RunRequest, timeoutMs: number) => {
     controllerRef.current?.abort();
     const controller = new AbortController();
@@ -35,5 +39,5 @@ export function useCodeRunner() {
   // 実行したままページを離れても Worker を残さない。
   useEffect(() => () => controllerRef.current?.abort(), []);
 
-  return { outcome, isRunning, run, stop };
+  return { outcome, isRunning, run, stop, clear };
 }

@@ -35,8 +35,24 @@ export interface Dictionary {
     shortcutHint: string;
     source: string;
     input: string;
+    expected: string;
     output: string;
     error: string;
+    language: string;
+    format: string;
+    toggleWrap: string;
+    toggleMinimap: string;
+    focus: string;
+    exitFocus: string;
+    nextProblem: string;
+    status: {
+      ready: string;
+      running: string;
+      completed: string;
+      accepted: string;
+      wrongAnswer: string;
+      failed: string;
+    };
     copy: (label: string) => string;
     clear: (label: string) => string;
     resize: string;
@@ -75,35 +91,6 @@ export interface Dictionary {
       reset: { title: string; description: string };
     };
   };
-  codeSetting: {
-    save: string;
-    reset: string;
-    saved: string;
-    resetDone: string;
-  };
-  hooks: {
-    snippets: string;
-    stdin: string;
-    stdout: string;
-    stderr: string;
-  };
-  exportSettings: {
-    intro: string;
-    download: string;
-    copy: string;
-  };
-  importSettings: {
-    intro: string;
-    save: string;
-    chooseFile: string;
-    applied: (count: number) => string;
-    errors: {
-      invalidJson: string;
-      notAnObject: string;
-      missingData: string;
-      nothingApplied: string;
-    };
-  };
   about: {
     lead: string;
     shortcutsHeading: string;
@@ -119,14 +106,14 @@ export const ja: Dictionary = {
   localeName: '日本語',
   siteTitle: 'AtCoder-JsDebugger',
   siteDescription:
-    'AtCoder の JavaScript 提出コードを、書き換えずにブラウザ上で実行・デバッグできるエディタ。標準入出力を再現し、コードも設定もローカルに保存されます。',
+    'AtCoder の JavaScript・TypeScript 提出コードをブラウザ上で実行・デバッグできるエディタ。標準入出力と出力判定に対応し、コードはローカルに保存されます。',
 
   pages: {
     editor: {
       title: 'Editor',
       description:
-        'AtCoder 提出用の JavaScript を、標準入力を与えてそのまま実行できるエディタです。',
-      documentTitle: 'AtCoder-JsDebugger | ブラウザで動く JavaScript 実行環境',
+        'JavaScript・TypeScript を、標準入力と期待出力を与えてブラウザ上で実行できます。',
+      documentTitle: 'AtCoder-JsDebugger | ブラウザで動く TypeScript 実行環境',
     },
     config: {
       title: 'Config',
@@ -136,30 +123,6 @@ export const ja: Dictionary = {
     editorSettings: {
       title: 'Editor Settings',
       description: 'エディタの設定を変更します。',
-    },
-    snippets: {
-      title: 'Snippets',
-      description: '初期状態で表示されるエディタのコードを編集します。',
-    },
-    stdin: {
-      title: 'Standard Input',
-      description: 'コード実行時の標準入力の設定を行います。',
-    },
-    stdout: {
-      title: 'Standard Output',
-      description: 'コード実行時の標準出力の設定を行います。',
-    },
-    stderr: {
-      title: 'Standard Error',
-      description: 'コード実行時の標準エラー出力の設定を行います。',
-    },
-    importSettings: {
-      title: 'Import Settings',
-      description: '設定情報の JSON を読み込みます。',
-    },
-    exportSettings: {
-      title: 'Export Settings',
-      description: '設定情報を JSON に出力します。',
     },
     about: {
       title: 'About',
@@ -190,8 +153,24 @@ export const ja: Dictionary = {
     shortcutHint: 'で実行',
     source: 'ソースコード',
     input: 'Input',
+    expected: 'Expected',
     output: 'Output',
     error: 'Error',
+    language: '実行言語',
+    format: 'ドキュメントを整形 (Shift + Alt + F)',
+    toggleWrap: '行の折り返しを切り替え (Alt + Z)',
+    toggleMinimap: 'ミニマップを切り替え',
+    focus: 'エディタを広げる',
+    exitFocus: '入出力ペインを表示',
+    nextProblem: '次の問題へ移動 (F8)',
+    status: {
+      ready: 'Ready',
+      running: 'Running',
+      completed: 'Completed',
+      accepted: 'Accepted',
+      wrongAnswer: 'Wrong Answer',
+      failed: 'Failed',
+    },
     copy: (label) => `${label} をコピー`,
     clear: (label) => `${label} をクリア`,
     resize: 'ペインの幅を変更',
@@ -216,8 +195,8 @@ export const ja: Dictionary = {
         body: 'エディタで書いたコードや設定は外部に送信されません。',
       },
       {
-        title: 'Worker 実行',
-        body: 'コードは Web Worker 内で動くため、無限ループでも画面は固まりません。',
+        title: 'TypeScript 対応',
+        body: 'Monaco の型診断を使いながら、TypeScript をブラウザ内でコンパイル・実行できます。',
       },
     ],
   },
@@ -279,47 +258,8 @@ export const ja: Dictionary = {
       reset: {
         title: '設定の初期化',
         description:
-          'スニペットや標準入出力の設定を含め、すべてを初期状態に戻します。',
+          '保存されたコードや入出力を含め、すべてを初期状態に戻します。',
       },
-    },
-  },
-
-  codeSetting: {
-    save: '保存',
-    reset: '初期化',
-    saved: '保存しました',
-    resetDone: '初期化しました',
-  },
-
-  hooks: {
-    snippets:
-      'エディタを開いたとき、および Reset を押したときに読み込まれるコードです。',
-    stdin:
-      'ユーザーコードの前に評価されます。AC_JS_DEBUGGER.__STDIN__ に Input ペインの内容が入るので、require("fs") などを差し替えて標準入力を再現します。',
-    stdout:
-      'AC_JS_DEBUGGER.__STDOUT__ に追記した文字列が Output ペインに表示されます。',
-    stderr:
-      'AC_JS_DEBUGGER.__STDERR__ に追記した文字列が Error ペインに表示されます。Error ペインは Editor Settings から表示を切り替えられます。',
-  },
-
-  exportSettings: {
-    intro:
-      '現在の設定を JSON として書き出します。編集中のコード (キャッシュ) は含まれません。',
-    download: 'JSON をダウンロード',
-    copy: 'コピー',
-  },
-
-  importSettings: {
-    intro:
-      'Export Settings で書き出した JSON を貼り付けるか、ファイルから読み込んで保存してください。既存の設定は上書きされます。',
-    save: '保存',
-    chooseFile: 'ファイルを選択',
-    applied: (count) => `${count} 件の設定を読み込みました`,
-    errors: {
-      invalidJson: 'JSON として解釈できませんでした',
-      notAnObject: 'JSON のトップレベルがオブジェクトではありません',
-      missingData: '"data" が見つかりません',
-      nothingApplied: '取り込める設定が含まれていません',
     },
   },
 
@@ -338,7 +278,7 @@ export const ja: Dictionary = {
         body: 'Chrome / Edge / Firefox / Safari の最新版',
       },
       { title: '画面サイズ', body: '1280 x 720 以上を推奨' },
-      { title: 'JavaScript', body: 'ES2022 / Web Worker 対応' },
+      { title: 'JavaScript / TypeScript', body: 'ES2022 / Web Worker 対応' },
     ],
     linksHeading: 'リンク',
     blogLabel: 's-yoshiki / tech blog',

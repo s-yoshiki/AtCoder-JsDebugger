@@ -55,6 +55,48 @@ monaco.editor.defineTheme(MONACO_DARK, {
 
 loader.config({ monaco });
 
+const runtimeTypes = `
+declare module "fs" {
+  export function readFileSync(
+    path: string | number,
+    encoding?: "utf8" | "utf-8"
+  ): string;
+}
+declare module "node:fs" {
+  export * from "fs";
+}
+declare function require(moduleName: "fs" | "node:fs"): typeof import("fs");
+declare const process: {
+  stdin: { fd: 0 };
+  stdout: { write(value: unknown): void };
+  stderr: { write(value: unknown): void };
+};
+`;
+
+const compilerOptions: monaco.typescript.CompilerOptions = {
+  target: monaco.typescript.ScriptTarget.ESNext,
+  module: monaco.typescript.ModuleKind.CommonJS,
+  moduleResolution: monaco.typescript.ModuleResolutionKind.NodeJs,
+  allowNonTsExtensions: true,
+  esModuleInterop: true,
+  strict: true,
+};
+
+monaco.typescript.typescriptDefaults.setCompilerOptions(compilerOptions);
+monaco.typescript.javascriptDefaults.setCompilerOptions({
+  ...compilerOptions,
+  allowJs: true,
+  checkJs: false,
+});
+monaco.typescript.typescriptDefaults.addExtraLib(
+  runtimeTypes,
+  'file:///atcoder-runtime.d.ts',
+);
+monaco.typescript.javascriptDefaults.addExtraLib(
+  runtimeTypes,
+  'file:///atcoder-runtime.d.ts',
+);
+
 /** 設定値とアプリのテーマから、実際に使う Monaco のテーマ名を決める。 */
 export function resolveMonacoTheme(
   setting: EditorTheme,

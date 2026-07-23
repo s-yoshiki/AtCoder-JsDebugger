@@ -5,14 +5,6 @@ import { DEFAULT_LOCALE, LOCALES, type Locale } from '@/config/routes';
 import { ConfigLayout } from '@/features/config/config-layout';
 import { AboutPage } from '@/features/config/pages/about-page';
 import { EditorSettingsPage } from '@/features/config/pages/editor-settings-page';
-import { ExportSettingsPage } from '@/features/config/pages/export-settings-page';
-import {
-  SnippetsPage,
-  StderrPage,
-  StdinPage,
-  StdoutPage,
-} from '@/features/config/pages/hook-pages';
-import { ImportSettingsPage } from '@/features/config/pages/import-settings-page';
 import { ConfigIndexPage } from '@/features/config/pages/index-page';
 import { EditorPage } from '@/features/editor/editor-page';
 import { NotFoundPage } from '@/features/not-found-page';
@@ -47,12 +39,6 @@ function localeRoutes(locale: Locale) {
       <Route path="config" element={<ConfigLayout />}>
         <Route index element={<ConfigIndexPage />} />
         <Route path="editor-settings" element={<EditorSettingsPage />} />
-        <Route path="snippets" element={<SnippetsPage />} />
-        <Route path="stdin" element={<StdinPage />} />
-        <Route path="stdout" element={<StdoutPage />} />
-        <Route path="stderr" element={<StderrPage />} />
-        <Route path="import-settings" element={<ImportSettingsPage />} />
-        <Route path="export-settings" element={<ExportSettingsPage />} />
         <Route path="about" element={<AboutPage />} />
       </Route>
     </Route>

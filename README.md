@@ -1,6 +1,6 @@
 # AtCoder-JsDebugger
 
-AtCoder の JavaScript 提出コードを、ブラウザ上でそのまま実行・デバッグできるエディタです。
+AtCoder の JavaScript / TypeScript 提出コードを、ブラウザ上でそのまま実行・デバッグできるエディタです。
 `require('fs').readFileSync('/dev/stdin', 'utf8')` を書いたコードを、貼り替えずに動かせます。
 
 ## DEMO
@@ -10,8 +10,11 @@ AtCoder の JavaScript 提出コードを、ブラウザ上でそのまま実行
 
 ## 特徴
 
-- **標準入出力の再現** — 標準入力・標準出力・標準エラー出力のフックは JavaScript として編集でき、
-  自分の書き方に合わせて差し替えられます。
+- **JavaScript / TypeScript** — 言語ごとに下書きを保持し、TypeScript はブラウザ内で
+  JavaScript にコンパイルして実行します。
+- **Monaco Editor** — 型診断・補完・整形・問題への移動・折り返し・ミニマップ・
+  集中表示を利用できます。`fs` / `require` / `process` の競プロ向け型定義も同梱しています。
+- **テスト判定** — 標準入力と期待出力を保存し、実行結果を Accepted / Wrong Answer で表示します。
 - **Web Worker 実行** — コードは Worker 内で動くため、無限ループを書いてもタブは固まらず、
   タイムアウトで安全に打ち切られます。
 - **ローカル完結** — コードも設定も localStorage に保存され、外部へ送信されません。
@@ -27,7 +30,7 @@ AtCoder の JavaScript 提出コードを、ブラウザ上でそのまま実行
 | ビルド | Vite |
 | UI | React + TypeScript |
 | スタイル | Tailwind CSS |
-| エディタ | Monaco Editor (`@monaco-editor/react`) |
+| エディタ | Monaco Editor (`@monaco-editor/react`) + TypeScript Language Service |
 | Lint / Format | Biome |
 | ルーティング | React Router (BrowserRouter) |
 
@@ -75,14 +78,9 @@ src/
 | --- | --- | --- |
 | エディタ | `/` | `/en` |
 | 設定 | `/config` | `/en/config` |
-| 標準入力の設定 | `/config/stdin` | `/en/config/stdin` |
-
 文言は [`src/i18n/ja.ts`](src/i18n/ja.ts) の `Dictionary` 型が正で、
 [`src/i18n/en.ts`](src/i18n/en.ts) はその型に従います。
 項目を足し忘れると型エラーになるので、翻訳漏れはビルド時に見つかります。
-
-v1 (Vue 版) の `#/config/stdin` のようなハッシュ URL は、
-`index.html` のインラインスクリプトが実パスへ書き換えるため、そのまま開けます。
 
 ## SEO と静的化
 
@@ -94,7 +92,7 @@ v1 (Vue 版) の `#/config/stdin` のようなハッシュ URL は、
 
 これにより `dist/` には以下が生成されます。
 
-- ルートごとの `index.html` (全 20 ページ + `404.html`)
+- ルートごとの `index.html` (全 8 ページ + `404.html`)
   — `<title>` / `meta description` / canonical / hreflang / OGP / Twitter Card /
   JSON-LD をページ単位で埋め込み済み。本文も描画済みなので、
   JavaScript を実行しないクローラーにも内容が届きます。
@@ -106,7 +104,7 @@ Monaco はマウント後に動的読み込みされるため、静的化した 
 
 ## デプロイ
 
-`master` への push で [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) が動き、
+`main` への push で [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) が動き、
 GitHub Pages へ公開されます。
 
 初回のみ、リポジトリの **Settings → Pages → Build and deployment → Source** を

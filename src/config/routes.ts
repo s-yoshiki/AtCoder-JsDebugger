@@ -8,12 +8,6 @@ export const PAGE_KEYS = [
   'editor',
   'config',
   'editorSettings',
-  'snippets',
-  'stdin',
-  'stdout',
-  'stderr',
-  'importSettings',
-  'exportSettings',
   'about',
 ] as const;
 export type PageKey = (typeof PAGE_KEYS)[number];
@@ -30,12 +24,6 @@ export const ROUTES: readonly RouteDef[] = [
   { key: 'editor', path: '/', priority: 1.0 },
   { key: 'config', path: '/config', priority: 0.6 },
   { key: 'editorSettings', path: '/config/editor-settings', priority: 0.5 },
-  { key: 'snippets', path: '/config/snippets', priority: 0.5 },
-  { key: 'stdin', path: '/config/stdin', priority: 0.5 },
-  { key: 'stdout', path: '/config/stdout', priority: 0.5 },
-  { key: 'stderr', path: '/config/stderr', priority: 0.5 },
-  { key: 'importSettings', path: '/config/import-settings', priority: 0.4 },
-  { key: 'exportSettings', path: '/config/export-settings', priority: 0.4 },
   { key: 'about', path: '/config/about', priority: 0.7 },
 ];
 

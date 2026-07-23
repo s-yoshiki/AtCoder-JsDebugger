@@ -201,7 +201,7 @@ export function EditorSettingsPage() {
           control={
             <Button variant="destructive" size="sm" onClick={clearAll}>
               <Trash2 className="size-3.5" />
-              {t.codeSetting.reset}
+              {t.settings.rows.reset.title}
             </Button>
           }
         />

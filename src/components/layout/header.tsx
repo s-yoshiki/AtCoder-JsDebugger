@@ -26,7 +26,7 @@ export function Header() {
           className="flex shrink-0 items-center gap-2.5 rounded-lg font-semibold tracking-tight"
         >
           <span className="grid size-7 place-items-center rounded-lg bg-primary font-mono text-[11px] text-primary-foreground">
-            JS
+            TS
           </span>
           <span className="truncate text-sm">{t.siteTitle}</span>
         </Link>

@@ -1,43 +1,24 @@
-/**
- * 実行環境に注入される既定のコード片。
- *
- * 標準入出力のフックは `AC_JS_DEBUGGER` オブジェクト経由で値をやり取りする。
- * このオブジェクトは実行時に Worker 側から関数引数として渡されるため、
- * ユーザーが書き換えたフックコードからもそのまま参照できる。
- */
+export type SourceLanguage = 'javascript' | 'typescript';
 
-export const DEFAULT_CODE = `"use strict"
-function main(arg) {
-    console.log(arg.trim().split("\\n")[0])
+export interface EditorDrafts {
+  javascript: string;
+  typescript: string;
 }
-main(require('fs').readFileSync('/dev/stdin', 'utf8'));`;
 
-export const DEFAULT_STDIN_HOOK = `/**
- * 標準入力
- */
-let require = (arg) => {
-  return {
-    readFileSync : (type, string_type) => {
-      return AC_JS_DEBUGGER.__STDIN__
-    }
-  }
-}`;
+export const DEFAULT_CODE: EditorDrafts = {
+  javascript: `const main = (input) => {
+  const values = input.trim().split(/\\s+/).map(Number);
+  console.log(values.reduce((sum, value) => sum + value, 0));
+};
 
-export const DEFAULT_STDOUT_HOOK = `/**
- * 標準出力
- */
-console.log = (arg) => {
-    AC_JS_DEBUGGER.__STDOUT__ += String(arg) + "\\n"
-}`;
+main(require("fs").readFileSync(0, "utf8"));`,
+  typescript: `const main = (input: string): void => {
+  const values = input.trim().split(/\\s+/).map(Number);
+  console.log(values.reduce((sum, value) => sum + value, 0));
+};
 
-export const DEFAULT_STDERR_HOOK = `/**
- * 標準エラー出力
- */
-console.error = (arg) => {
-    AC_JS_DEBUGGER.__STDERR__ += String(arg) + "\\n"
-}
-console.warn =  (arg) => {
-    AC_JS_DEBUGGER.__STDERR__ += String(arg) + "\\n"
-}`;
+main(require("fs").readFileSync(0, "utf8"));`,
+};
 
-export const SAMPLE_STDIN = '';
+export const DEFAULT_LANGUAGE: SourceLanguage = 'typescript';
+export const SAMPLE_STDIN = '1 2 3';

@@ -4,14 +4,14 @@ export const en: Dictionary = {
   localeName: 'English',
   siteTitle: 'AtCoder-JsDebugger',
   siteDescription:
-    'Run and debug AtCoder JavaScript submissions in the browser, unmodified. It emulates standard input and output, and keeps your code and settings on your own machine.',
+    'Run and debug AtCoder JavaScript and TypeScript submissions in the browser. Test standard input against expected output while keeping code on your own machine.',
 
   pages: {
     editor: {
       title: 'Editor',
       description:
-        'Write JavaScript the way you submit it to AtCoder, feed it standard input, and run it right here.',
-      documentTitle: 'AtCoder-JsDebugger | JavaScript playground for AtCoder',
+        'Run JavaScript and TypeScript in the browser with standard input and expected-output judging.',
+      documentTitle: 'AtCoder-JsDebugger | TypeScript playground for AtCoder',
     },
     config: {
       title: 'Config',
@@ -21,30 +21,6 @@ export const en: Dictionary = {
     editorSettings: {
       title: 'Editor Settings',
       description: 'Change how the editor looks and behaves.',
-    },
-    snippets: {
-      title: 'Snippets',
-      description: 'Edit the code the editor starts with.',
-    },
-    stdin: {
-      title: 'Standard Input',
-      description: 'Configure how standard input is emulated.',
-    },
-    stdout: {
-      title: 'Standard Output',
-      description: 'Configure how standard output is captured.',
-    },
-    stderr: {
-      title: 'Standard Error',
-      description: 'Configure how standard error is captured.',
-    },
-    importSettings: {
-      title: 'Import Settings',
-      description: 'Load settings from a JSON file.',
-    },
-    exportSettings: {
-      title: 'Export Settings',
-      description: 'Write the current settings out as JSON.',
     },
     about: {
       title: 'About',
@@ -75,8 +51,24 @@ export const en: Dictionary = {
     shortcutHint: 'to run',
     source: 'Source code',
     input: 'Input',
+    expected: 'Expected',
     output: 'Output',
     error: 'Error',
+    language: 'Execution language',
+    format: 'Format document (Shift + Alt + F)',
+    toggleWrap: 'Toggle word wrap (Alt + Z)',
+    toggleMinimap: 'Toggle minimap',
+    focus: 'Expand the editor',
+    exitFocus: 'Show input and output',
+    nextProblem: 'Go to next problem (F8)',
+    status: {
+      ready: 'Ready',
+      running: 'Running',
+      completed: 'Completed',
+      accepted: 'Accepted',
+      wrongAnswer: 'Wrong Answer',
+      failed: 'Failed',
+    },
     copy: (label) => `Copy ${label.toLowerCase()}`,
     clear: (label) => `Clear ${label.toLowerCase()}`,
     resize: 'Resize panes',
@@ -101,8 +93,8 @@ export const en: Dictionary = {
         body: 'Neither the code you write nor your settings leave the browser.',
       },
       {
-        title: 'Runs in a Worker',
-        body: 'Code runs inside a Web Worker, so an infinite loop never freezes the page.',
+        title: 'TypeScript ready',
+        body: 'Use Monaco type diagnostics, then compile and run TypeScript entirely in the browser.',
       },
     ],
   },
@@ -162,47 +154,8 @@ export const en: Dictionary = {
       reset: {
         title: 'Reset everything',
         description:
-          'Restores the defaults, including snippets and the standard I/O hooks.',
+          'Restores every setting, saved draft, input and expected output.',
       },
-    },
-  },
-
-  codeSetting: {
-    save: 'Save',
-    reset: 'Reset',
-    saved: 'Saved',
-    resetDone: 'Reset to defaults',
-  },
-
-  hooks: {
-    snippets:
-      'The code loaded when you open the editor and when you press Reset.',
-    stdin:
-      'Evaluated before your code. AC_JS_DEBUGGER.__STDIN__ holds the contents of the Input pane, so you can swap out require("fs") to emulate standard input.',
-    stdout:
-      'Whatever you append to AC_JS_DEBUGGER.__STDOUT__ shows up in the Output pane.',
-    stderr:
-      'Whatever you append to AC_JS_DEBUGGER.__STDERR__ shows up in the Error pane. You can toggle that pane under Editor Settings.',
-  },
-
-  exportSettings: {
-    intro:
-      'Writes the current settings out as JSON. The code you are editing (the cache) is not included.',
-    download: 'Download JSON',
-    copy: 'Copy',
-  },
-
-  importSettings: {
-    intro:
-      'Paste JSON produced by Export Settings, or load it from a file, then save. Existing settings are overwritten.',
-    save: 'Save',
-    chooseFile: 'Choose a file',
-    applied: (count) => `Loaded ${count} setting${count === 1 ? '' : 's'}`,
-    errors: {
-      invalidJson: 'That is not valid JSON',
-      notAnObject: 'The top level of the JSON is not an object',
-      missingData: '"data" is missing',
-      nothingApplied: 'Nothing in the file could be imported',
     },
   },
 
@@ -221,7 +174,7 @@ export const en: Dictionary = {
         body: 'A recent Chrome, Edge, Firefox or Safari',
       },
       { title: 'Screen', body: '1280 x 720 or larger recommended' },
-      { title: 'JavaScript', body: 'ES2022 and Web Workers' },
+      { title: 'JavaScript / TypeScript', body: 'ES2022 and Web Workers' },
     ],
     linksHeading: 'Links',
     blogLabel: 's-yoshiki / tech blog',

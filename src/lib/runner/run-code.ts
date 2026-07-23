@@ -13,7 +13,12 @@ export interface RunOptions {
   signal?: AbortSignal;
 }
 
-const EMPTY: RunResponse = { stdout: '', stderr: '', error: null };
+const EMPTY: RunResponse = {
+  stdout: '',
+  stderr: '',
+  error: null,
+  errorKind: null,
+};
 
 /**
  * ユーザーコードを使い捨ての Worker で実行する。
@@ -50,7 +55,13 @@ export function runCode(
     const timer = setTimeout(() => finish(EMPTY, 'timeout'), timeoutMs);
 
     worker.onmessage = (event: MessageEvent<RunResponse>) => {
-      finish(event.data, 'ok');
+      const status =
+        event.data.errorKind === 'compile'
+          ? 'compile-error'
+          : event.data.errorKind === 'runtime'
+            ? 'runtime-error'
+            : 'ok';
+      finish(event.data, status);
     };
 
     worker.onerror = (event) => {

@@ -1,8 +1,9 @@
 import {
   DEFAULT_CODE,
-  DEFAULT_STDERR_HOOK,
-  DEFAULT_STDIN_HOOK,
-  DEFAULT_STDOUT_HOOK,
+  DEFAULT_LANGUAGE,
+  type EditorDrafts,
+  SAMPLE_STDIN,
+  type SourceLanguage,
 } from './default-code';
 import { type AnyStore, createStore, STORAGE_KEYS } from './storage';
 
@@ -121,41 +122,59 @@ export const editorSettingsStore = createStore<EditorSettings>(
   { normalize: normalizeEditorSettings },
 );
 
-export const snippetsStore = createStore<string>(
-  STORAGE_KEYS.snippets,
-  DEFAULT_CODE,
-  { normalize: normalizeText(DEFAULT_CODE) },
-);
+function normalizeDrafts(raw: unknown): EditorDrafts {
+  // v2.0 以前の単一 JavaScript キャッシュも引き継ぐ。
+  if (typeof raw === 'string') {
+    return { ...DEFAULT_CODE, javascript: raw || DEFAULT_CODE.javascript };
+  }
+  if (typeof raw !== 'object' || raw === null) {
+    return DEFAULT_CODE;
+  }
+  const value = raw as Record<string, unknown>;
+  return {
+    javascript:
+      typeof value.javascript === 'string'
+        ? value.javascript
+        : DEFAULT_CODE.javascript,
+    typescript:
+      typeof value.typescript === 'string'
+        ? value.typescript
+        : DEFAULT_CODE.typescript,
+  };
+}
 
-export const stdinHookStore = createStore<string>(
-  STORAGE_KEYS.stdin,
-  DEFAULT_STDIN_HOOK,
-  { normalize: normalizeText(DEFAULT_STDIN_HOOK) },
-);
+function normalizeLanguage(raw: unknown): SourceLanguage {
+  return raw === 'javascript' || raw === 'typescript' ? raw : DEFAULT_LANGUAGE;
+}
 
-export const stdoutHookStore = createStore<string>(
-  STORAGE_KEYS.stdout,
-  DEFAULT_STDOUT_HOOK,
-  { normalize: normalizeText(DEFAULT_STDOUT_HOOK) },
-);
-
-export const stderrHookStore = createStore<string>(
-  STORAGE_KEYS.stderr,
-  DEFAULT_STDERR_HOOK,
-  { normalize: normalizeText(DEFAULT_STDERR_HOOK) },
-);
-
-export const editorCacheStore = createStore<string>(
+export const editorCacheStore = createStore<EditorDrafts>(
   STORAGE_KEYS.editorCache,
+  DEFAULT_CODE,
+  { normalize: normalizeDrafts },
+);
+
+export const editorLanguageStore = createStore<SourceLanguage>(
+  STORAGE_KEYS.editorLanguage,
+  DEFAULT_LANGUAGE,
+  { normalize: normalizeLanguage },
+);
+
+export const editorInputStore = createStore<string>(
+  STORAGE_KEYS.editorInput,
+  SAMPLE_STDIN,
+  { normalize: normalizeText(SAMPLE_STDIN) },
+);
+
+export const editorExpectedStore = createStore<string>(
+  STORAGE_KEYS.editorExpected,
   '',
   { normalize: normalizeText('') },
 );
 
 export const ALL_STORES: readonly AnyStore[] = [
   editorSettingsStore,
-  snippetsStore,
-  stdinHookStore,
-  stdoutHookStore,
-  stderrHookStore,
   editorCacheStore,
+  editorLanguageStore,
+  editorInputStore,
+  editorExpectedStore,
 ];

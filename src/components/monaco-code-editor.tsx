@@ -18,6 +18,9 @@ export default function MonacoCodeEditor({
   readOnly = false,
   compact = false,
   ariaLabel,
+  path,
+  onMount,
+  onProblemsChange,
 }: CodeEditorProps) {
   const [settings] = useStore(editorSettingsStore);
   const { theme } = useTheme();
@@ -26,12 +29,24 @@ export default function MonacoCodeEditor({
     (next: string | undefined) => onChange?.(next ?? ''),
     [onChange],
   );
+  const handleValidate = useCallback(
+    (markers: { severity: number }[]) => {
+      onProblemsChange?.({
+        errors: markers.filter((marker) => marker.severity === 8).length,
+        warnings: markers.filter((marker) => marker.severity === 4).length,
+      });
+    },
+    [onProblemsChange],
+  );
 
   return (
     <Editor
       value={value}
       onChange={handleChange}
+      onMount={onMount}
+      onValidate={handleValidate}
       language={language}
+      path={path}
       theme={resolveMonacoTheme(settings.theme, theme)}
       loading={
         <Loader2 className="size-5 animate-spin text-muted-foreground" />
@@ -51,7 +66,22 @@ export default function MonacoCodeEditor({
         lineNumbersMinChars: 3,
         scrollBeyondLastLine: false,
         automaticLayout: true,
+        fixedOverflowWidgets: true,
         smoothScrolling: true,
+        formatOnPaste: !readOnly,
+        formatOnType: !readOnly,
+        bracketPairColorization: { enabled: !compact },
+        guides: {
+          bracketPairs: !compact,
+          indentation: !compact,
+        },
+        stickyScroll: { enabled: !compact },
+        quickSuggestions: compact
+          ? false
+          : { other: true, comments: false, strings: false },
+        suggestSelection: 'first',
+        tabCompletion: compact ? 'off' : 'on',
+        wordBasedSuggestions: compact ? 'off' : 'matchingDocuments',
         renderLineHighlight: compact ? 'none' : 'line',
         padding: { top: compact ? 6 : 12, bottom: compact ? 6 : 12 },
         scrollbar: {

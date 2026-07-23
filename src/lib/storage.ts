@@ -9,18 +9,15 @@
 /** v1 からのキー。`editor_chache` の綴りは互換のため意図的に据え置く。 */
 export const STORAGE_KEYS = {
   editorSettings: 'editor_settings',
-  snippets: 'snippets',
-  stdin: 'stdin',
-  stdout: 'stdout',
-  stderr: 'stderr',
   editorCache: 'editor_chache',
+  editorLanguage: 'editor_language',
+  editorInput: 'editor_input',
+  editorExpected: 'editor_expected',
 } as const;
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
 
 /** 設定のエクスポート対象から外すキー (作業中コードは持ち出さない)。 */
-export const NON_EXPORTABLE_KEYS: StorageKey[] = [STORAGE_KEYS.editorCache];
-
 export interface Store<T> {
   readonly key: StorageKey;
   readonly defaultValue: T;

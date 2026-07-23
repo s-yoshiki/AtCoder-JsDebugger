@@ -7,19 +7,6 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="author" content="s-yoshiki" />
     <!--
-      v1 は HashRouter だったので、`#/config/stdin` のような URL が
-      外部に残っている。ルーターが起動する前に実パスへ書き換える。
-    -->
-    <script>
-      (function () {
-        var hash = location.hash;
-        if (hash.indexOf('#/') !== 0) return;
-        var base = location.pathname.replace(/index\.html$/, '');
-        var next = base.replace(/\/$/, '') + hash.slice(1);
-        history.replaceState(null, '', next + location.search);
-      })();
-    </script>
-    <!--
       保存済みテーマ (なければ OS 設定) を最初の描画前に適用し、
       誤ったテーマが一瞬表示されるのを防ぐ。
     -->
