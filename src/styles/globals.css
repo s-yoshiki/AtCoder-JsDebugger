@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@source "../**/*.{ts,tsx}";
+
+/* ダークモードは <html> の `.dark` クラスで切り替える。クラスは
+   index.html のインラインスクリプトが初回描画前に付与する。 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --font-sans: var(--font-sans-stack);
+  --font-mono: var(--font-mono-stack);
+
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 2px);
+  --radius-2xl: calc(var(--radius) + 6px);
+
+  --shadow-sm: var(--elevation-sm);
+  --shadow-md: var(--elevation);
+}
+
+:root {
+  /* --- raw palette (light) --- */
+  --bg: #fbfbfd;
+  --surface: #ffffff;
+  --surface-subtle: #f4f5f8;
+  --border-subtle: #e3e6ec;
+  --border-strong-raw: #ccd1da;
+  --text: #16181d;
+  --text-muted: #616b7a;
+  --accent-raw: #3b5bdb;
+  --accent-hover: #2f4bc4;
+  --accent-subtle: #eaefff;
+  --accent-contrast: #ffffff;
+  --elevation-sm: 0 1px 2px rgb(16 18 27 / 0.06);
+  --elevation: 0 4px 16px rgb(16 18 27 / 0.08);
+
+  /* --- semantic aliases --- */
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --primary: var(--accent-raw);
+  --primary-foreground: var(--accent-contrast);
+  --secondary: var(--surface-subtle);
+  --secondary-foreground: var(--text);
+  --muted: var(--surface-subtle);
+  --muted-foreground: var(--text-muted);
+  --accent: var(--accent-subtle);
+  --accent-foreground: var(--accent-hover);
+  --border: var(--border-subtle);
+  --border-strong: var(--border-strong-raw);
+  --input: var(--border-strong-raw);
+  --ring: var(--accent-raw);
+  --destructive: #c92a2a;
+  --destructive-foreground: #ffffff;
+  --success: #237032;
+  --warning: #ad3e0b;
+
+  --radius: 10px;
+  --header-height: 3.5rem;
+
+  --font-sans-stack:
+    system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP",
+    Meiryo, sans-serif;
+  --font-mono-stack:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg: #0f1116;
+  --surface: #171a21;
+  --surface-subtle: #1e222b;
+  --border-subtle: #272c37;
+  --border-strong-raw: #3a4150;
+  --text: #e7e9ee;
+  --text-muted: #9aa3b2;
+  --accent-raw: #7d97ff;
+  --accent-hover: #93a9ff;
+  --accent-subtle: #1c2440;
+  --accent-contrast: #0f1116;
+  --elevation-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --elevation: 0 4px 16px rgb(0 0 0 / 0.45);
+
+  --accent-foreground: #c3cfff;
+  --destructive: #ff8787;
+  --destructive-foreground: #0f1116;
+  --success: #69db7c;
+  --warning: #ffa94d;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans-stack);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  border-color: var(--border);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 操作可能な要素すべてに共通のキーボードフォーカス表示を与える。
+   ポインタ操作では出さず、キーボード操作では必ず出す。 */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: calc(var(--radius) - 4px);
+}
+
+::selection {
+  background: var(--accent-subtle);
+  color: var(--foreground);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-subtle);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong-raw);
+  border: 2px solid var(--surface-subtle);
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore-start lint/complexity/noImportantStyles: 個別のアニメーション指定を確実に打ち消す必要がある */
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    /* biome-ignore-end lint/complexity/noImportantStyles: 個別のアニメーション指定を確実に打ち消す必要がある */
+  }
+}
+
+/* Monaco は自前の背景色を持つので、枠側と地の色を合わせておく。 */
+.monaco-editor,
+.monaco-editor .overflow-guard {
+  border-radius: inherit;
+}

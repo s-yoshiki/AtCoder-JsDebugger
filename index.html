@@ -1,36 +1,46 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ja">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" 
-      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
-      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" 
-      crossorigin="anonymous">
-    
-    <!-- Load required Bootstrap and BootstrapVue CSS -->
-    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
-
-    <!-- Load polyfills to support older browsers -->
-    <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CMutationObserver" crossorigin="anonymous"></script>
-
-    <!-- Load Vue followed by BootstrapVue -->
-    <!-- <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
-    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script> -->
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-103231688-4"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="author" content="s-yoshiki" />
+    <!--
+      v1 は HashRouter だったので、`#/config/stdin` のような URL が
+      外部に残っている。ルーターが起動する前に実パスへ書き換える。
+    -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-103231688-4');
+      (function () {
+        var hash = location.hash;
+        if (hash.indexOf('#/') !== 0) return;
+        var base = location.pathname.replace(/index\.html$/, '');
+        var next = base.replace(/\/$/, '') + hash.slice(1);
+        history.replaceState(null, '', next + location.search);
+      })();
     </script>
-
+    <!--
+      保存済みテーマ (なければ OS 設定) を最初の描画前に適用し、
+      誤ったテーマが一瞬表示されるのを防ぐ。
+    -->
+    <script>
+      (function () {
+        try {
+          var s = localStorage.getItem('theme');
+          var d =
+            s === 'dark' ||
+            (s !== 'light' &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', d);
+          document.documentElement.style.colorScheme = d ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script>
     <title>AtCoder-JsDebugger</title>
+    <!--app-head-->
   </head>
   <body>
-    <div id="app"></div>
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
