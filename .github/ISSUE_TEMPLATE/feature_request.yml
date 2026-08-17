@@ -3,6 +3,7 @@ description: 機能改善を提案する
 title: "[Feature]: "
 labels:
   - enhancement
+projects: ["s-yoshiki/1"]
 body:
   - type: textarea
     id: problem
