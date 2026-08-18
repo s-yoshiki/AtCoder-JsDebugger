@@ -40,6 +40,18 @@ pnpm run build
 `pnpm run check`は、Biomeのフォーマット確認、Lint、TypeScript型チェックを実行します。
 `pnpm run build`はそれらに加えてクライアント / SSRビルドと静的生成を確認します。
 
+### Biomeのルール
+
+`biome.json`では汎用ルールを`preset: "all"`で有効にしています。ReactとTailwind
+CSSはこのリポジトリで実際に使っているため、それぞれのdomainも`all`で有効です。
+React Native、Next.js、テスト、その他の未使用framework、および複数ファイルの解決を
+必要とする`project` / `types` domainは、誤検知を避けるため`none`を明示しています。
+依存関係や生成物の構成が変わった場合は、これらのdomainを再評価してください。
+
+以前の個別ルール無効化は`preset: "all"`で診断内容を確認し、現行コードで抑制が必要な
+ものがなかったため削除しました。今後、ルールを無効化する場合は対象コードの制約と
+理由を同じ変更で記録してください。
+
 現在、専用の自動テストスイートはありません。実行系やMonacoを変更した場合は、
 次の手動確認も必要です。
 

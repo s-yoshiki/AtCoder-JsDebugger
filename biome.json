@@ -20,22 +20,24 @@
   "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
+    "domains": {
+      "drizzle": "none",
+      "react": "all",
+      "reactNative": "none",
+      "test": "none",
+      "solid": "none",
+      "next": "none",
+      "qwik": "none",
+      "svelte": "none",
+      "vue": "none",
+      "project": "none",
+      "tailwind": "all",
+      "turborepo": "none",
+      "playwright": "none",
+      "types": "none"
+    },
     "rules": {
-      "preset": "recommended",
-      "a11y": {
-        "noSvgWithoutTitle": "off",
-        "useButtonType": "off",
-        "useGenericFontNames": "off"
-      },
-      "correctness": {
-        "useExhaustiveDependencies": "off"
-      },
-      "security": {
-        "noDangerouslySetInnerHtml": "off"
-      },
-      "suspicious": {
-        "noArrayIndexKey": "off"
-      }
+      "preset": "all"
     }
   },
   "javascript": {

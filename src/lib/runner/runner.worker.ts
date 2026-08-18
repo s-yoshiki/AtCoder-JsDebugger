@@ -120,8 +120,16 @@ self.onmessage = async (event: MessageEvent<RunRequest>) => {
   };
   const processShim = {
     stdin: { fd: 0 },
-    stdout: { write: (value: unknown) => (stdout += String(value)) },
-    stderr: { write: (value: unknown) => (stderr += String(value)) },
+    stdout: {
+      write: (value: unknown) => {
+        stdout += String(value);
+      },
+    },
+    stderr: {
+      write: (value: unknown) => {
+        stderr += String(value);
+      },
+    },
   };
   const moduleShim = { exports: {} as unknown };
 
