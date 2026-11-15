@@ -4,12 +4,7 @@ export type Locale = (typeof LOCALES)[number];
 /** 接頭辞を持たない既定のロケール。 */
 export const DEFAULT_LOCALE: Locale = 'ja';
 
-export const PAGE_KEYS = [
-  'editor',
-  'config',
-  'editorSettings',
-  'about',
-] as const;
+export const PAGE_KEYS = ['editor', 'config', 'editorSettings', 'about'] as const;
 export type PageKey = (typeof PAGE_KEYS)[number];
 
 export interface RouteDef {
@@ -28,9 +23,7 @@ export const ROUTES: readonly RouteDef[] = [
 ];
 
 /** 設定画面のサイドバーに並ぶページ。 */
-export const CONFIG_ROUTES = ROUTES.filter((route) =>
-  route.path.startsWith('/config'),
-);
+export const CONFIG_ROUTES = ROUTES.filter((route) => route.path.startsWith('/config'));
 
 /** ロケール接頭辞を付けたアプリ内パスを返す (`/config` → `/en/config`)。 */
 export function localizePath(locale: Locale, path: string): string {

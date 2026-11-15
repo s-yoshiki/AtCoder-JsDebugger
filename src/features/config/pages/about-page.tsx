@@ -14,18 +14,11 @@ export function AboutPage() {
       </p>
 
       <section>
-        <h2 className="font-semibold text-lg tracking-tight">
-          {t.about.shortcutsHeading}
-        </h2>
+        <h2 className="font-semibold text-lg tracking-tight">{t.about.shortcutsHeading}</h2>
         <dl className="mt-3 divide-y divide-border rounded-xl border border-border bg-card">
           {t.about.shortcuts.map((shortcut) => (
-            <div
-              key={shortcut.keys}
-              className="flex items-center justify-between gap-4 px-4 py-3"
-            >
-              <dt className="text-muted-foreground text-sm">
-                {shortcut.description}
-              </dt>
+            <div key={shortcut.keys} className="flex items-center justify-between gap-4 px-4 py-3">
+              <dt className="text-muted-foreground text-sm">{shortcut.description}</dt>
               <dd>
                 <kbd className="rounded border border-border bg-muted px-2 py-1 font-mono text-xs">
                   {shortcut.keys}
@@ -37,9 +30,7 @@ export function AboutPage() {
       </section>
 
       <section>
-        <h2 className="font-semibold text-lg tracking-tight">
-          {t.about.environmentHeading}
-        </h2>
+        <h2 className="font-semibold text-lg tracking-tight">{t.about.environmentHeading}</h2>
         <div className="mt-3 grid gap-3 sm:grid-cols-3">
           {t.about.environment.map((item) => (
             <Card key={item.title}>
@@ -55,9 +46,7 @@ export function AboutPage() {
       </section>
 
       <section>
-        <h2 className="font-semibold text-lg tracking-tight">
-          {t.about.linksHeading}
-        </h2>
+        <h2 className="font-semibold text-lg tracking-tight">{t.about.linksHeading}</h2>
         <ul className="mt-3 space-y-2 text-sm">
           <li>
             <a

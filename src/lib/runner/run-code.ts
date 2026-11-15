@@ -1,9 +1,4 @@
-import type {
-  RunOutcome,
-  RunRequest,
-  RunResponse,
-  RunStatus,
-} from './protocol';
+import type { RunOutcome, RunRequest, RunResponse, RunStatus } from './protocol';
 import RunnerWorker from './runner.worker?worker';
 
 export interface RunOptions {

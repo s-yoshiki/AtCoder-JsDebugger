@@ -20,10 +20,7 @@ export function LanguageSwitcher() {
       className="ml-1 flex items-center gap-1 rounded-lg border border-border p-0.5"
       aria-label={t.header.language}
     >
-      <Languages
-        className="ml-1 size-3.5 shrink-0 text-muted-foreground"
-        aria-hidden="true"
-      />
+      <Languages className="ml-1 size-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
       {LOCALES.map((candidate) => {
         const isCurrent = candidate === locale;
         return (

@@ -17,19 +17,12 @@ interface SplitPaneOptions {
  * 横並びのペインをドラッグでリサイズする。
  * ポインタキャプチャを使うので、カーソルがエディタ上に乗っても追従する。
  */
-export function useSplitPane({
-  initial = 56,
-  min = 25,
-  max = 80,
-}: SplitPaneOptions = {}) {
+export function useSplitPane({ initial = 56, min = 25, max = 80 }: SplitPaneOptions = {}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [ratio, setRatio] = useState(initial);
   const [isDragging, setIsDragging] = useState(false);
 
-  const clamp = useCallback(
-    (value: number) => Math.min(max, Math.max(min, value)),
-    [min, max],
-  );
+  const clamp = useCallback((value: number) => Math.min(max, Math.max(min, value)), [min, max]);
 
   const onPointerDown = useCallback((event: ReactPointerEvent<HTMLElement>) => {
     event.currentTarget.setPointerCapture(event.pointerId);

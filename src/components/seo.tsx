@@ -5,10 +5,7 @@ import type { PageSeo } from '@/lib/seo';
  * ビルド時に埋め込んだ head を、クライアント遷移でも同じ内容に保つ。
  * prerender した HTML と同じタグを書き換えるので、初回表示では実質何もしない。
  */
-function upsertMeta(
-  selector: string,
-  attributes: Record<string, string>,
-): void {
+function upsertMeta(selector: string, attributes: Record<string, string>): void {
   let element = document.head.querySelector<HTMLElement>(selector);
   if (!element) {
     const tag = selector.startsWith('link') ? 'link' : 'meta';
@@ -20,13 +17,7 @@ function upsertMeta(
   }
 }
 
-export function Seo({
-  seo,
-  noIndex = false,
-}: {
-  seo: PageSeo;
-  noIndex?: boolean;
-}) {
+export function Seo({ seo, noIndex = false }: { seo: PageSeo; noIndex?: boolean }) {
   useEffect(() => {
     document.title = seo.title;
     document.documentElement.lang = seo.lang;
@@ -57,9 +48,7 @@ export function Seo({
     });
 
     // hreflang はページごとに数が変わるので、毎回入れ替える。
-    for (const link of document.head.querySelectorAll(
-      'link[rel="alternate"][hreflang]',
-    )) {
+    for (const link of document.head.querySelectorAll('link[rel="alternate"][hreflang]')) {
       link.remove();
     }
     for (const alternate of seo.alternates) {

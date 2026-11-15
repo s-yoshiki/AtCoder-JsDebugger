@@ -119,9 +119,7 @@ export function buildPageSeo(locale: Locale, key: PageKey): PageSeo {
 
 /** 静的化 (prerender / sitemap) の対象となる全ページ。 */
 export function allPageSeo(): PageSeo[] {
-  return LOCALES.flatMap((locale) =>
-    ROUTES.map((route) => buildPageSeo(locale, route.key)),
-  );
+  return LOCALES.flatMap((locale) => ROUTES.map((route) => buildPageSeo(locale, route.key)));
 }
 
 /** 見つからないパス向け。インデックスさせない。 */

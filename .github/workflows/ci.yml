@@ -22,15 +22,15 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: .node-version
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Format & lint (Biome)
+      - name: Format (Oxfmt)
         run: pnpm run format:check
 
-      - name: Lint
+      - name: Lint (Oxlint)
         run: pnpm run lint
 
       - name: Typecheck

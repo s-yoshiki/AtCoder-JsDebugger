@@ -36,12 +36,12 @@ AtCoder向けJavaScript / TypeScriptコードをブラウザ内で編集・実�
 
 ## 技術スタック
 
-- Node.js 22以上
+- Node.js 26
 - pnpm（`package.json#packageManager`が正）
 - React、TypeScript、Vite
 - Tailwind CSS
 - Monaco Editor
-- Biome
+- Oxlint / Oxfmt
 - React Router
 
 依存関係の操作にはnpm / yarnではなくpnpmを使います。

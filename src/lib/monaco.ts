@@ -88,20 +88,11 @@ monaco.typescript.javascriptDefaults.setCompilerOptions({
   allowJs: true,
   checkJs: false,
 });
-monaco.typescript.typescriptDefaults.addExtraLib(
-  runtimeTypes,
-  'file:///atcoder-runtime.d.ts',
-);
-monaco.typescript.javascriptDefaults.addExtraLib(
-  runtimeTypes,
-  'file:///atcoder-runtime.d.ts',
-);
+monaco.typescript.typescriptDefaults.addExtraLib(runtimeTypes, 'file:///atcoder-runtime.d.ts');
+monaco.typescript.javascriptDefaults.addExtraLib(runtimeTypes, 'file:///atcoder-runtime.d.ts');
 
 /** 設定値とアプリのテーマから、実際に使う Monaco のテーマ名を決める。 */
-export function resolveMonacoTheme(
-  setting: EditorTheme,
-  appTheme: AppTheme,
-): string {
+export function resolveMonacoTheme(setting: EditorTheme, appTheme: AppTheme): string {
   switch (setting) {
     case 'light':
       return MONACO_LIGHT;

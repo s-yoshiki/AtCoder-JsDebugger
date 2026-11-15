@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @source "../**/*.{ts,tsx}";
 
@@ -81,11 +81,9 @@
   --header-height: 3.5rem;
 
   --font-sans-stack:
-    system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP",
-    Meiryo, sans-serif;
+    system-ui, -apple-system, 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', Meiryo, sans-serif;
   --font-mono-stack:
-    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
-    monospace;
+    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 }
 
 .dark {
@@ -172,11 +170,11 @@ a {
   *,
   *::before,
   *::after {
-    /* biome-ignore-start lint/complexity/noImportantStyles: 個別のアニメーション指定を確実に打ち消す必要がある */
+    /* 個別のアニメーション指定を確実に打ち消す必要がある */
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    /* biome-ignore-end lint/complexity/noImportantStyles: 個別のアニメーション指定を確実に打ち消す必要がある */
+    /* 個別のアニメーション指定を確実に打ち消す必要がある */
   }
 }
 

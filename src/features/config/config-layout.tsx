@@ -12,9 +12,7 @@ export function ConfigLayout() {
   const { path } = parseLocalePath(pathname);
   const normalized = path.replace(/\/$/, '') || '/config';
 
-  const current =
-    CONFIG_ROUTES.find((route) => route.path === normalized) ??
-    CONFIG_ROUTES[0];
+  const current = CONFIG_ROUTES.find((route) => route.path === normalized) ?? CONFIG_ROUTES[0];
   const key = current?.key ?? 'config';
   const seo = useMemo(() => buildPageSeo(locale, key), [locale, key]);
   const page = t.pages[key];
@@ -57,12 +55,8 @@ export function ConfigLayout() {
         <main className="min-h-0 flex-1 overflow-y-auto">
           <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
             <header className="border-border border-b pb-5">
-              <h1 className="font-semibold text-2xl tracking-tight">
-                {page.title}
-              </h1>
-              <p className="mt-1.5 text-muted-foreground text-sm">
-                {page.description}
-              </p>
+              <h1 className="font-semibold text-2xl tracking-tight">{page.title}</h1>
+              <p className="mt-1.5 text-muted-foreground text-sm">{page.description}</p>
             </header>
             <div className="pt-6 pb-16">
               <Outlet />

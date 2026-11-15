@@ -11,13 +11,7 @@ interface SwitchProps {
 }
 
 /** ネイティブの checkbox を土台にした、テーマ準拠のトグル。 */
-export function Switch({
-  checked,
-  onCheckedChange,
-  className,
-  disabled,
-  ...props
-}: SwitchProps) {
+export function Switch({ checked, onCheckedChange, className, disabled, ...props }: SwitchProps) {
   return (
     <button
       type="button"

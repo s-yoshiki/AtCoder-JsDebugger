@@ -10,13 +10,7 @@ import { EditorPage } from '@/features/editor/editor-page';
 import { NotFoundPage } from '@/features/not-found-page';
 import { LocaleProvider } from '@/i18n/context';
 
-function LocaleLayout({
-  locale,
-  children,
-}: {
-  locale: Locale;
-  children?: ReactNode;
-}) {
+function LocaleLayout({ locale, children }: { locale: Locale; children?: ReactNode }) {
   return (
     <LocaleProvider locale={locale}>
       <div className="flex h-full flex-col">

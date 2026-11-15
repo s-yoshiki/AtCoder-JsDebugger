@@ -48,9 +48,7 @@ export default function MonacoCodeEditor({
       language={language}
       path={path}
       theme={resolveMonacoTheme(settings.theme, theme)}
-      loading={
-        <Loader2 className="size-5 animate-spin text-muted-foreground" />
-      }
+      loading={<Loader2 className="size-5 animate-spin text-muted-foreground" />}
       options={{
         // Monaco が内部で使う textarea にそのまま付く。
         ariaLabel,
@@ -76,9 +74,7 @@ export default function MonacoCodeEditor({
           indentation: !compact,
         },
         stickyScroll: { enabled: !compact },
-        quickSuggestions: compact
-          ? false
-          : { other: true, comments: false, strings: false },
+        quickSuggestions: compact ? false : { other: true, comments: false, strings: false },
         suggestSelection: 'first',
         tabCompletion: compact ? 'off' : 'on',
         wordBasedSuggestions: compact ? 'off' : 'matchingDocuments',

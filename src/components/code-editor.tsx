@@ -30,10 +30,7 @@ const MonacoCodeEditor = lazy(() => import('./monaco-code-editor'));
  * この <pre> は prerender した HTML にも出るため、
  * JavaScript を実行しないクローラーにもコードが読める。
  */
-function EditorFallback({
-  value,
-  compact,
-}: Pick<CodeEditorProps, 'value' | 'compact'>) {
+function EditorFallback({ value, compact }: Pick<CodeEditorProps, 'value' | 'compact'>) {
   return (
     <pre
       className={cn(
