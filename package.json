@@ -1,29 +1,26 @@
 {
   "name": "atcoder-js-debugger",
   "version": "2.0.0",
-  "description": "AtCoder 向けの JavaScript・TypeScript 実行環境 (ブラウザ完結)",
-  "author": "Shinagawa Yoshiki <s.yoshiki1123@gmail.com>",
-  "license": "MIT",
   "private": true,
+  "description": "AtCoder 向けの JavaScript・TypeScript 実行環境 (ブラウザ完結)",
+  "license": "MIT",
+  "author": "Shinagawa Yoshiki <s.yoshiki1123@gmail.com>",
   "type": "module",
-  "packageManager": "pnpm@12.20.0",
-  "engines": {
-    "node": ">=26.0.0 <27.0.0"
-  },
   "scripts": {
-    "dev": "vite",
     "build": "tsc --noEmit && pnpm run build:client && pnpm run build:ssr && pnpm run build:prerender",
-    "build:client": "vite build",
-    "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
-    "build:prerender": "node scripts/prerender.mjs",
-    "preview": "vite preview",
+    "dev": "vite",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint src",
     "lint:fix": "oxlint --fix src",
     "format": "oxfmt src scripts vite.config.ts",
     "format:check": "oxfmt --check src scripts vite.config.ts",
     "check": "pnpm lint && pnpm format:check && pnpm typecheck",
-    "verify": "pnpm check && pnpm build"
+    "check:fix": "pnpm lint:fix && pnpm format",
+    "verify": "pnpm check && pnpm build",
+    "build:client": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
+    "build:prerender": "node scripts/prerender.mjs",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@monaco-editor/react": "catalog:",
@@ -44,9 +41,13 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
-    "tailwindcss": "catalog:",
-    "vite": "catalog:",
     "oxfmt": "catalog:",
-    "oxlint": "catalog:"
-  }
+    "oxlint": "catalog:",
+    "tailwindcss": "catalog:",
+    "vite": "catalog:"
+  },
+  "engines": {
+    "node": ">=26.0.0 <27.0.0"
+  },
+  "packageManager": "pnpm@12.20.0"
 }
