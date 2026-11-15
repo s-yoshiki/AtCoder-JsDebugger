@@ -153,8 +153,7 @@ export const en: Dictionary = {
       },
       reset: {
         title: 'Reset everything',
-        description:
-          'Restores every setting, saved draft, input and expected output.',
+        description: 'Restores every setting, saved draft, input and expected output.',
       },
     },
   },

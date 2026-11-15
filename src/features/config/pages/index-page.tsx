@@ -29,29 +29,25 @@ export function ConfigIndexPage() {
       </div>
 
       <ul className="space-y-2">
-        {CONFIG_ROUTES.filter((route) => route.path !== '/config').map(
-          (route) => {
-            const page = t.pages[route.key];
-            return (
-              <li key={route.path}>
-                <Link
-                  to={to(route.path)}
-                  className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:border-border-strong hover:bg-muted"
-                >
-                  <span className="min-w-0">
-                    <span className="block font-medium text-sm">
-                      {page.title}
-                    </span>
-                    <span className="mt-0.5 block text-[13px] text-muted-foreground">
-                      {page.description}
-                    </span>
+        {CONFIG_ROUTES.filter((route) => route.path !== '/config').map((route) => {
+          const page = t.pages[route.key];
+          return (
+            <li key={route.path}>
+              <Link
+                to={to(route.path)}
+                className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:border-border-strong hover:bg-muted"
+              >
+                <span className="min-w-0">
+                  <span className="block font-medium text-sm">{page.title}</span>
+                  <span className="mt-0.5 block text-[13px] text-muted-foreground">
+                    {page.description}
                   </span>
-                  <ChevronRight className="ml-auto size-4 shrink-0 text-muted-foreground" />
-                </Link>
-              </li>
-            );
-          },
-        )}
+                </span>
+                <ChevronRight className="ml-auto size-4 shrink-0 text-muted-foreground" />
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

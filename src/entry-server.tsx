@@ -57,9 +57,7 @@ function renderHead(seo: PageSeo, noIndex: boolean): string {
   ];
 
   for (const alternate of seo.alternates) {
-    tags.push(
-      `<link rel="alternate" hreflang="${alternate.hreflang}" href="${alternate.href}" />`,
-    );
+    tags.push(`<link rel="alternate" hreflang="${alternate.hreflang}" href="${alternate.href}" />`);
   }
 
   if (noIndex) {
@@ -100,9 +98,7 @@ export function getPages(): PrerenderPage[] {
         loc: seo.canonical,
         priority: route?.priority ?? 0.5,
         // x-default は sitemap では重複になるので落とす。
-        alternates: seo.alternates.filter(
-          (alternate) => alternate.hreflang !== 'x-default',
-        ),
+        alternates: seo.alternates.filter((alternate) => alternate.hreflang !== 'x-default'),
       },
     } satisfies PrerenderPage;
   });
@@ -121,13 +117,9 @@ export function getPages(): PrerenderPage[] {
 
 export function renderRobotsTxt(): string {
   const base = BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL;
-  return [
-    'User-agent: *',
-    'Allow: /',
-    '',
-    `Sitemap: ${SITE_ORIGIN}${base}/sitemap.xml`,
-    '',
-  ].join('\n');
+  return ['User-agent: *', 'Allow: /', '', `Sitemap: ${SITE_ORIGIN}${base}/sitemap.xml`, ''].join(
+    '\n',
+  );
 }
 
 export function renderSitemap(pages: PrerenderPage[]): string {

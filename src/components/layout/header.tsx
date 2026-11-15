@@ -31,13 +31,9 @@ export function Header() {
           <span className="truncate text-sm">{t.siteTitle}</span>
         </Link>
 
-        <nav
-          className="ml-auto flex items-center gap-0.5"
-          aria-label={t.header.nav}
-        >
+        <nav className="ml-auto flex items-center gap-0.5" aria-label={t.header.nav}>
           {navItems.map((item) => {
-            const isCurrent =
-              item.path === '/' ? path === '/' : path.startsWith(item.path);
+            const isCurrent = item.path === '/' ? path === '/' : path.startsWith(item.path);
             const Icon = item.icon;
             return (
               <Button
@@ -47,10 +43,7 @@ export function Header() {
                 asChild
                 className={isCurrent ? 'text-foreground' : undefined}
               >
-                <Link
-                  to={to(item.path)}
-                  aria-current={isCurrent ? 'page' : undefined}
-                >
+                <Link to={to(item.path)} aria-current={isCurrent ? 'page' : undefined}>
                   <Icon className="size-4" />
                   <span className="hidden sm:inline">{item.label}</span>
                 </Link>
@@ -59,12 +52,7 @@ export function Header() {
           })}
           <ThemeToggle />
           <Button variant="ghost" size="icon" asChild>
-            <a
-              href={SITE.repository}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={t.header.github}
-            >
+            <a href={SITE.repository} target="_blank" rel="noreferrer" aria-label={t.header.github}>
               <GithubIcon className="size-4" />
             </a>
           </Button>

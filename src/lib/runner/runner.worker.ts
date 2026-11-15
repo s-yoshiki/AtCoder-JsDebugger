@@ -2,8 +2,7 @@
 import * as ts from 'typescript';
 import type { RunRequest, RunResponse } from './protocol';
 
-const AsyncFunction = Object.getPrototypeOf(async () => undefined)
-  .constructor as new (
+const AsyncFunction = Object.getPrototypeOf(async () => undefined).constructor as new (
   ...args: string[]
 ) => (...values: unknown[]) => Promise<void>;
 
@@ -47,9 +46,7 @@ function formatDiagnostic(diagnostic: ts.Diagnostic): string {
   if (!diagnostic.file || diagnostic.start === undefined) {
     return `TS${diagnostic.code}: ${message}`;
   }
-  const position = diagnostic.file.getLineAndCharacterOfPosition(
-    diagnostic.start,
-  );
+  const position = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start);
   return `${position.line + 1}:${position.character + 1} TS${diagnostic.code}: ${message}`;
 }
 
@@ -143,13 +140,7 @@ self.onmessage = async (event: MessageEvent<RunRequest>) => {
       'exports',
       compiled.code,
     );
-    await run(
-      requireShim,
-      consoleShim,
-      processShim,
-      moduleShim,
-      moduleShim.exports,
-    );
+    await run(requireShim, consoleShim, processShim, moduleShim, moduleShim.exports);
   } catch (caught) {
     error = describe(caught);
   }

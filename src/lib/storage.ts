@@ -96,8 +96,7 @@ export function createStore<T>(
       return cache.value;
     }
     const raw = readRaw(key);
-    const value =
-      raw === null ? defaultValue : (normalize?.(raw) ?? (raw as T));
+    const value = raw === null ? defaultValue : (normalize?.(raw) ?? (raw as T));
     cache = { value };
     return value;
   };

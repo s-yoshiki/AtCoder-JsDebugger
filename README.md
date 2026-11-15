@@ -62,8 +62,8 @@ AtCoderジャッジ固有のライブラリは利用できません。TypeScript
 
 ### 必要な環境
 
-- Node.js 22以上
-- pnpm 11.15.1
+- Node.js 26
+- pnpm 12.15.1
 
 ```bash
 pnpm install
@@ -76,8 +76,8 @@ pnpm dev
 | `pnpm run check` | フォーマット、Lint、型チェック |
 | `pnpm run build` | 型チェック、クライアント / SSRビルド、静的生成 |
 | `pnpm preview` | `dist/`をローカルで確認 |
-| `pnpm format` | Biomeで整形とimport整理 |
-| `pnpm lint` | BiomeでLint |
+| `pnpm format` | Oxlint / Oxfmtで整形とimport整理 |
+| `pnpm lint` | Oxlint / OxfmtでLint |
 | `pnpm typecheck` | TypeScript型チェック |
 
 詳細なセットアップ、確認項目、トラブルシュートは

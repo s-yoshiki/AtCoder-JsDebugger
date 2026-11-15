@@ -2,18 +2,11 @@ import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select } from '@/components/ui/select';
 import { SettingRow } from '@/components/ui/setting-row';
-import {
-  StatusMessage,
-  useTransientStatus,
-} from '@/components/ui/status-message';
+import { StatusMessage, useTransientStatus } from '@/components/ui/status-message';
 import { Switch } from '@/components/ui/switch';
 import { useStore } from '@/hooks/use-store';
 import { useI18n } from '@/i18n/context';
-import {
-  ALL_STORES,
-  type EditorSettings,
-  editorSettingsStore,
-} from '@/lib/settings';
+import { ALL_STORES, type EditorSettings, editorSettingsStore } from '@/lib/settings';
 import { resetAllStores } from '@/lib/storage';
 
 const fontSizeOptions = ['12', '13', '14', '16', '18'];
@@ -26,10 +19,7 @@ export function EditorSettingsPage() {
 
   const rows = t.settings.rows;
 
-  const update = <K extends keyof EditorSettings>(
-    key: K,
-    value: EditorSettings[K],
-  ) => {
+  const update = <K extends keyof EditorSettings>(key: K, value: EditorSettings[K]) => {
     setSettings((previous) => ({ ...previous, [key]: value }));
     setStatus({ tone: 'success', text: t.settings.saved });
   };
@@ -58,9 +48,7 @@ export function EditorSettingsPage() {
 
   return (
     <div>
-      <p className="text-muted-foreground text-sm leading-relaxed">
-        {t.settings.intro}
-      </p>
+      <p className="text-muted-foreground text-sm leading-relaxed">{t.settings.intro}</p>
 
       <div className="mt-4">
         <SettingRow
@@ -94,9 +82,7 @@ export function EditorSettingsPage() {
           control={
             <Select
               value={settings.theme}
-              onChange={(event) =>
-                update('theme', event.target.value as EditorSettings['theme'])
-              }
+              onChange={(event) => update('theme', event.target.value as EditorSettings['theme'])}
               aria-label={rows.theme.title}
             >
               {themeOptions.map((option) => (
@@ -115,9 +101,7 @@ export function EditorSettingsPage() {
           control={
             <Select
               value={String(settings.fontSize)}
-              onChange={(event) =>
-                update('fontSize', Number(event.target.value))
-              }
+              onChange={(event) => update('fontSize', Number(event.target.value))}
               aria-label={rows.fontSize.title}
             >
               {fontSizeOptions.map((size) => (
@@ -160,9 +144,7 @@ export function EditorSettingsPage() {
           control={
             <Select
               value={String(settings.paneSize)}
-              onChange={(event) =>
-                update('paneSize', Number(event.target.value))
-              }
+              onChange={(event) => update('paneSize', Number(event.target.value))}
               aria-label={rows.paneSize.title}
             >
               {paneSizeOptions.map((option) => (
@@ -181,9 +163,7 @@ export function EditorSettingsPage() {
           control={
             <Select
               value={String(settings.timeoutMs)}
-              onChange={(event) =>
-                update('timeoutMs', Number(event.target.value))
-              }
+              onChange={(event) => update('timeoutMs', Number(event.target.value))}
               aria-label={rows.timeout.title}
             >
               {timeoutSeconds.map((seconds) => (

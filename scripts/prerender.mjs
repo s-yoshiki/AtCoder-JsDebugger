@@ -15,9 +15,7 @@ const distDir = join(root, 'dist');
 const ssrDir = join(root, 'dist-ssr');
 
 const template = await readFile(join(distDir, 'index.html'), 'utf8');
-const server = await import(
-  pathToFileURL(join(ssrDir, 'entry-server.js')).href
-);
+const server = await import(pathToFileURL(join(ssrDir, 'entry-server.js')).href);
 
 const pages = server.getPages();
 
@@ -35,16 +33,10 @@ for (const page of pages) {
 }
 
 await writeFile(join(distDir, 'robots.txt'), server.renderRobotsTxt(), 'utf8');
-await writeFile(
-  join(distDir, 'sitemap.xml'),
-  server.renderSitemap(pages),
-  'utf8',
-);
+await writeFile(join(distDir, 'sitemap.xml'), server.renderSitemap(pages), 'utf8');
 
 // SSR バンドルは成果物ではないので残さない。
 await rm(ssrDir, { recursive: true, force: true });
 
 const sitemapCount = pages.filter((page) => page.sitemap).length;
-console.log(
-  `prerendered ${pages.length} pages (${sitemapCount} in sitemap.xml)`,
-);
+console.log(`prerendered ${pages.length} pages (${sitemapCount} in sitemap.xml)`);

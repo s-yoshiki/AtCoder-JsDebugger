@@ -222,13 +222,11 @@ export const ja: Dictionary = {
     rows: {
       stderr: {
         title: 'エラーコンソールの有効化',
-        description:
-          'console.error() / console.warn() の出力ペインを表示します。',
+        description: 'console.error() / console.warn() の出力ペインを表示します。',
       },
       cache: {
         title: 'キャッシュの有効化',
-        description:
-          'エディタを開いた際に、最後に編集していた内容を復元します。',
+        description: 'エディタを開いた際に、最後に編集していた内容を復元します。',
       },
       theme: {
         title: 'テーマの変更',
@@ -257,8 +255,7 @@ export const ja: Dictionary = {
       },
       reset: {
         title: '設定の初期化',
-        description:
-          '保存されたコードや入出力を含め、すべてを初期状態に戻します。',
+        description: '保存されたコードや入出力を含め、すべてを初期状態に戻します。',
       },
     },
   },

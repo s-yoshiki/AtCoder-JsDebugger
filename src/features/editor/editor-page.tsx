@@ -22,11 +22,7 @@ import { useCodeRunner } from '@/hooks/use-code-runner';
 import { useSplitPane } from '@/hooks/use-split-pane';
 import { useStore } from '@/hooks/use-store';
 import { useI18n } from '@/i18n/context';
-import {
-  DEFAULT_CODE,
-  type EditorDrafts,
-  type SourceLanguage,
-} from '@/lib/default-code';
+import { DEFAULT_CODE, type EditorDrafts, type SourceLanguage } from '@/lib/default-code';
 import { isOutputAccepted } from '@/lib/judge';
 import type { RunOutcome } from '@/lib/runner/protocol';
 import { buildPageSeo } from '@/lib/seo';
@@ -40,9 +36,7 @@ import {
 import { cn } from '@/lib/utils';
 import { IoPane } from './io-pane';
 
-const isMac =
-  typeof navigator !== 'undefined' &&
-  /Mac|iP(hone|ad)/.test(navigator.platform ?? '');
+const isMac = typeof navigator !== 'undefined' && /Mac|iP(hone|ad)/.test(navigator.platform ?? '');
 const RUN_SHORTCUT = isMac ? '⌘ + Enter' : 'Ctrl + Enter';
 
 const EMPTY_PROBLEMS: EditorProblems = { errors: 0, warnings: 0 };
@@ -139,9 +133,7 @@ export function EditorPage() {
   const failure = describeFailure(outcome, t);
   const hasExpected = expected.trim().length > 0;
   const accepted =
-    outcome?.status === 'ok' && hasExpected
-      ? isOutputAccepted(expected, outcome.stdout)
-      : null;
+    outcome?.status === 'ok' && hasExpected ? isOutputAccepted(expected, outcome.stdout) : null;
   const status = getRunStatus({
     outcome,
     isRunning,
@@ -185,9 +177,7 @@ export function EditorPage() {
 
               <Select
                 value={language}
-                onChange={(event) =>
-                  handleLanguageChange(event.target.value as SourceLanguage)
-                }
+                onChange={(event) => handleLanguageChange(event.target.value as SourceLanguage)}
                 aria-label={t.editor.language}
                 className="h-8 w-32 py-1 text-xs"
               >
@@ -249,11 +239,7 @@ export function EditorPage() {
               aria-label={focusMode ? t.editor.exitFocus : t.editor.focus}
               aria-pressed={focusMode}
             >
-              {focusMode ? (
-                <Minimize2 className="size-4" />
-              ) : (
-                <Maximize2 className="size-4" />
-              )}
+              {focusMode ? <Minimize2 className="size-4" /> : <Maximize2 className="size-4" />}
             </Button>
 
             {problems.errors + problems.warnings > 0 ? (
@@ -315,7 +301,7 @@ export function EditorPage() {
 
         {!focusMode ? (
           <>
-            {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: フォーカス可能な separator は aria-label を取れる */}
+            {/* フォーカス可能な separator は aria-label を取れる */}
             <div
               {...handleProps}
               aria-label={t.editor.resize}
@@ -343,12 +329,8 @@ export function EditorPage() {
                 height={settings.paneSize}
                 meta={
                   accepted === null ? null : (
-                    <span
-                      className={accepted ? 'text-success' : 'text-destructive'}
-                    >
-                      {accepted
-                        ? t.editor.status.accepted
-                        : t.editor.status.wrongAnswer}
+                    <span className={accepted ? 'text-success' : 'text-destructive'}>
+                      {accepted ? t.editor.status.accepted : t.editor.status.wrongAnswer}
                     </span>
                   )
                 }

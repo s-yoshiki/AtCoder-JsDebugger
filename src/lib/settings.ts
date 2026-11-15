@@ -7,12 +7,7 @@ import {
 } from './default-code';
 import { type AnyStore, createStore, STORAGE_KEYS } from './storage';
 
-export const EDITOR_THEMES = [
-  'auto',
-  'light',
-  'dark',
-  'high-contrast',
-] as const;
+export const EDITOR_THEMES = ['auto', 'light', 'dark', 'high-contrast'] as const;
 export type EditorTheme = (typeof EDITOR_THEMES)[number];
 
 export interface EditorSettings {
@@ -51,9 +46,7 @@ function toBoolean(value: unknown, fallback: boolean): boolean {
 
 function toNumber(value: unknown, fallback: number): number {
   const parsed = typeof value === 'string' ? Number(value) : value;
-  return typeof parsed === 'number' && Number.isFinite(parsed)
-    ? parsed
-    : fallback;
+  return typeof parsed === 'number' && Number.isFinite(parsed) ? parsed : fallback;
 }
 
 /** v1 の Monaco テーマ名を新しい設定値へ読み替える。 */
@@ -85,14 +78,8 @@ export function normalizeEditorSettings(raw: unknown): EditorSettings {
   const d = DEFAULT_EDITOR_SETTINGS;
 
   return {
-    showStderr: toBoolean(
-      value.showStderr ?? value.errorpaineStatus,
-      d.showStderr,
-    ),
-    restoreCache: toBoolean(
-      value.restoreCache ?? value.chacheStatus,
-      d.restoreCache,
-    ),
+    showStderr: toBoolean(value.showStderr ?? value.errorpaineStatus, d.showStderr),
+    restoreCache: toBoolean(value.restoreCache ?? value.chacheStatus, d.restoreCache),
     theme: toEditorTheme(value.theme ?? value.themeColor, d.theme),
     paneSize: clamp(toNumber(value.paneSize ?? value.paineSize, d.paneSize), {
       min: 120,
@@ -132,14 +119,8 @@ function normalizeDrafts(raw: unknown): EditorDrafts {
   }
   const value = raw as Record<string, unknown>;
   return {
-    javascript:
-      typeof value.javascript === 'string'
-        ? value.javascript
-        : DEFAULT_CODE.javascript,
-    typescript:
-      typeof value.typescript === 'string'
-        ? value.typescript
-        : DEFAULT_CODE.typescript,
+    javascript: typeof value.javascript === 'string' ? value.javascript : DEFAULT_CODE.javascript,
+    typescript: typeof value.typescript === 'string' ? value.typescript : DEFAULT_CODE.typescript,
   };
 }
 
@@ -147,11 +128,9 @@ function normalizeLanguage(raw: unknown): SourceLanguage {
   return raw === 'javascript' || raw === 'typescript' ? raw : DEFAULT_LANGUAGE;
 }
 
-export const editorCacheStore = createStore<EditorDrafts>(
-  STORAGE_KEYS.editorCache,
-  DEFAULT_CODE,
-  { normalize: normalizeDrafts },
-);
+export const editorCacheStore = createStore<EditorDrafts>(STORAGE_KEYS.editorCache, DEFAULT_CODE, {
+  normalize: normalizeDrafts,
+});
 
 export const editorLanguageStore = createStore<SourceLanguage>(
   STORAGE_KEYS.editorLanguage,
@@ -159,17 +138,13 @@ export const editorLanguageStore = createStore<SourceLanguage>(
   { normalize: normalizeLanguage },
 );
 
-export const editorInputStore = createStore<string>(
-  STORAGE_KEYS.editorInput,
-  SAMPLE_STDIN,
-  { normalize: normalizeText(SAMPLE_STDIN) },
-);
+export const editorInputStore = createStore<string>(STORAGE_KEYS.editorInput, SAMPLE_STDIN, {
+  normalize: normalizeText(SAMPLE_STDIN),
+});
 
-export const editorExpectedStore = createStore<string>(
-  STORAGE_KEYS.editorExpected,
-  '',
-  { normalize: normalizeText('') },
-);
+export const editorExpectedStore = createStore<string>(STORAGE_KEYS.editorExpected, '', {
+  normalize: normalizeText(''),
+});
 
 export const ALL_STORES: readonly AnyStore[] = [
   editorSettingsStore,

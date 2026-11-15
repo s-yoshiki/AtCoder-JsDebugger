@@ -53,11 +53,7 @@ export function IoPane({
         >
           {label}
         </h2>
-        {meta ? (
-          <span className="truncate text-[11px] text-muted-foreground">
-            {meta}
-          </span>
-        ) : null}
+        {meta ? <span className="truncate text-[11px] text-muted-foreground">{meta}</span> : null}
         <div className="ml-auto flex items-center gap-0.5">
           <Button
             variant="ghost"
@@ -67,11 +63,7 @@ export function IoPane({
             disabled={value.length === 0}
             aria-label={t.editor.copy(label)}
           >
-            {copied ? (
-              <Check className="size-3.5 text-success" />
-            ) : (
-              <Copy className="size-3.5" />
-            )}
+            {copied ? <Check className="size-3.5 text-success" /> : <Copy className="size-3.5" />}
           </Button>
           {onChange || onClear ? (
             <Button
@@ -88,10 +80,7 @@ export function IoPane({
         </div>
       </div>
 
-      <div
-        className="overflow-hidden rounded-lg border border-border bg-card"
-        style={{ height }}
-      >
+      <div className="overflow-hidden rounded-lg border border-border bg-card" style={{ height }}>
         <CodeEditor
           value={value}
           onChange={onChange}
